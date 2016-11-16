@@ -15,13 +15,45 @@
             </MenuItem>
         </Menu>
         <StackPanel Margin="20" HorizontalAlignment="Left" Width="280" Orientation="Vertical">
-            <Label Content="Meeting centers"></Label>
-            <ListBox Height="108"></ListBox>
+            <Label Content="Meeting centers" FontSize="20"></Label>
+            <ListBox Height="158" Name="mCentersList"></ListBox>
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingCenter" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
+                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left"></Button>
+                <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingCenter" HorizontalAlignment="Right"></Button>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Meeting Center Details"></Label>
+                <Label Content="Name"/>
+                <TextBox Name="tboxNameMC"></TextBox>
+                <Label Content="Code"/>
+                <TextBox Name="tboxCodeMC"></TextBox>
+                <Label Content="Description"/>
+                <TextBox Name="tboxDescMC"></TextBox>
+            </StackPanel>
         </StackPanel>
         <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
-            <Label Content="Meeting rooms"></Label>
-            <ListBox Height="108"></ListBox>
+            <Label Content="Meeting rooms" FontSize="20"></Label>
+            <ListBox Height="158" Name="mRoomsList"></ListBox>
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingRoom" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
+                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left"></Button>
+                <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingRoom" HorizontalAlignment="Right"></Button>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Meeting Room Details"></Label>
+                <Label Content="Name"/>
+                <TextBox Name="tboxMRName"></TextBox>
+                <Label Content="Code"/>
+                <TextBox Name="tboxMRCode"></TextBox>
+                <Label Content="Description"/>
+                <TextBox Name="tboxMRDesc"></TextBox>
+                <Label Content="Capacity"/>
+                <TextBox Name="tboxMRCapcity"></TextBox>
+                <CheckBox Margin="5" Name="MRVideoConferenceCheckBox" Content="Video conference" />
+            </StackPanel>
+
         </StackPanel>
-  
+
     </Grid>
 </Window>

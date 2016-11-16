@@ -24,5 +24,10 @@ namespace CSP_SemestralWork
         {
             InitializeComponent();
         }
+
+        private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
