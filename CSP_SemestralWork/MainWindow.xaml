@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSP_SemestralWork"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="550" Width="625">
     <Grid>
-        
+        <Menu Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+            <MenuItem Header="File">
+                <MenuItem Header="Import"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <StackPanel Margin="20" HorizontalAlignment="Left" Width="280" Orientation="Vertical">
+            <Label Content="Meeting centers"></Label>
+            <ListBox Height="108"></ListBox>
+        </StackPanel>
+        <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
+            <Label Content="Meeting rooms"></Label>
+            <ListBox Height="108"></ListBox>
+        </StackPanel>
+  
     </Grid>
 </Window>
