@@ -24,6 +24,7 @@ namespace CSP_SemestralWork
         {
             InitializeComponent();
             mCentersList.ItemsSource = TestingData.MeetingCenters;
+            mRoomsList.ItemsSource = TestingData.MeetingRooms;
         }
 
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
