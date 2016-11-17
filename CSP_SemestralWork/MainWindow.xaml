@@ -16,7 +16,7 @@
         </Menu>
         <StackPanel Margin="20" HorizontalAlignment="Left" Width="280" Orientation="Vertical">
             <Label Content="Meeting centers" FontSize="20"></Label>
-            <ListBox Height="158" Name="mCentersList"></ListBox>
+            <ListBox Height="158" Name="mCentersList" DisplayMemberPath="Name"></ListBox>
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingCenter" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
                 <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left"></Button>
@@ -25,11 +25,11 @@
             <StackPanel>
                 <Label Content="Meeting Center Details"></Label>
                 <Label Content="Name"/>
-                <TextBox Name="tboxNameMC"></TextBox>
+                <TextBox x:Name="tboxNameMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name}"></TextBox>
                 <Label Content="Code"/>
-                <TextBox Name="tboxCodeMC"></TextBox>
+                <TextBox x:Name="tboxCodeMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code}"></TextBox>
                 <Label Content="Description"/>
-                <TextBox Name="tboxDescMC"></TextBox>
+                <TextBox x:Name="tboxDescMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description}"></TextBox>
             </StackPanel>
         </StackPanel>
         <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
