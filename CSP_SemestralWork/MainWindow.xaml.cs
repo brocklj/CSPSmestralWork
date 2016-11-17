@@ -23,13 +23,13 @@ namespace CSP_SemestralWork
         public MainWindow()
         {
             InitializeComponent();
-            mCentersList.ItemsSource = TestingData.MeetingCenters;
-            mRoomsList.ItemsSource = TestingData.MeetingRooms;
+            mCentersList.ItemsSource = TestingData.MeetingCenters;           
+           
         }
 
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
         {
 
-        }
+        }    
     }
 }

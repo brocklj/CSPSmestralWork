@@ -26,7 +26,7 @@ namespace CSP_SemestralWork
         public MeetingRoom(string name, string code, int capacity,MeetingCenter meetingcenter)
         {
             Center = meetingcenter;
-            Center.MeetingRooms.Add(new MeetingRoom("ds", "dssds", 2));
+            Center.MeetingRooms.Add(this);
 
 
         }

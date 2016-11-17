@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,11 @@ namespace CSP_SemestralWork
         public string Code { get; set;}
         // 
         public string Description { get; set; }
-        public List<MeetingRoom> MeetingRooms { get; set; }
+        public ObservableCollection<MeetingRoom> MeetingRooms { get; set; } = new ObservableCollection<MeetingRoom>();
+        public MeetingCenter()
+        {
+
+        }
 
         public MeetingCenter(string name, string code, string description)
         {
