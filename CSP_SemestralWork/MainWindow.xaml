@@ -25,16 +25,16 @@
             <StackPanel>
                 <Label Content="Meeting Center Details"></Label>
                 <Label Content="Name"/>
-                <TextBox x:Name="tboxNameMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name}"></TextBox>
+                <TextBox x:Name="tboxNameMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
                 <Label Content="Code"/>
-                <TextBox x:Name="tboxCodeMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code}"></TextBox>
+                <TextBox x:Name="tboxCodeMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
                 <Label Content="Description"/>
-                <TextBox x:Name="tboxDescMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description}"></TextBox>
+                <TextBox x:Name="tboxDescMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
             </StackPanel>
         </StackPanel>
         <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
             <Label Content="Meeting rooms" FontSize="20"></Label>
-            <ListBox Height="158" Name="mRoomsList"></ListBox>
+            <ListBox Height="158" Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name"></ListBox>
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingRoom" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
                 <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left"></Button>
@@ -43,13 +43,13 @@
             <StackPanel>
                 <Label Content="Meeting Room Details"></Label>
                 <Label Content="Name"/>
-                <TextBox Name="tboxMRName"></TextBox>
+                <TextBox Name="tboxMRName" Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
                 <Label Content="Code"/>
-                <TextBox Name="tboxMRCode"></TextBox>
+                <TextBox Name="tboxMRCode"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
                 <Label Content="Description"/>
-                <TextBox Name="tboxMRDesc"></TextBox>
+                <TextBox Name="tboxMRDesc"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
                 <Label Content="Capacity"/>
-                <TextBox Name="tboxMRCapcity"></TextBox>
+                <TextBox Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
                 <CheckBox Margin="5" Name="MRVideoConferenceCheckBox" Content="Video conference" />
             </StackPanel>
 

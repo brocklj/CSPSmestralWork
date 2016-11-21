@@ -20,16 +20,29 @@ namespace CSP_SemestralWork
     /// </summary>
     public partial class MainWindow : Window
     {
+        MeetingCenter MeetingCenter = new MeetingCenter();
         public MainWindow()
         {
             InitializeComponent();
-            mCentersList.ItemsSource = TestingData.MeetingCenters;           
+            mCentersList.ItemsSource = TestingData.MeetingCenters;
+                   
            
         }
 
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
         {
 
-        }    
+        }
+
+        private void mCentersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+
+        }
+
+        private void mRoomsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

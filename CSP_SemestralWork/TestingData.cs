@@ -20,9 +20,9 @@ namespace CSP_SemestralWork
             MeetingRooms = new List<MeetingRoom>();
             // Data of intance of classes
             #region Data
-            MeetingCenter MC1 = new MeetingCenter("EBC", "23ad", "Parukarka");
-            MeetingCenter MC2 = new MeetingCenter("Par", "3ad", "Parukarka");
-            MeetingCenter MC3 = new MeetingCenter("da", "2wad", "Parukarka");
+            MeetingCenter MC1 = new MeetingCenter("Zabreh", "23ad", "Parukarka");
+            MeetingCenter MC2 = new MeetingCenter("Opava", "3ad", "Parukarka");
+            MeetingCenter MC3 = new MeetingCenter("Praha", "2wad", "Parukarka");
 
             MeetingRoom mr1 = new MeetingRoom("1.1","32:sd",10,MC1);
             MeetingRoom mr2 = new MeetingRoom("1.3", "32:sd", 10, MC1);
