@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSP_SemestralWork"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="625" x:Name="app" Closing="app_Closing">
+        Title="CSP Jakub Brockl 2016" Height="550" Width="625" x:Name="app" Closing="app_Closing">
     <Grid>
         <Menu Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
             <MenuItem Header="File">
                 <MenuItem x:Name="btImport" Header="Import" Click="btImport_Click"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Exit"></MenuItem>
+                <MenuItem x:Name="btMenuSave" Header="Save" Click="btMenuSave_Click"></MenuItem>
+                <MenuItem x:Name="btMenuExit" Header="Exit" Click="btMenuExit_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <StackPanel Margin="20" HorizontalAlignment="Left" Width="280" Orientation="Vertical">

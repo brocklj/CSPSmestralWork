@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,14 +23,16 @@ namespace CSP_SemestralWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        MeetingCenter MeetingCenter = new MeetingCenter();
-        public MainWindow()
-        {
-            InitializeComponent();
-           
+        //Register and indicator whether data was changed every action changes DataChanged into true
+        static bool DataChanged = false;
+        Data load = new Data();
 
-            mCentersList.ItemsSource = Data.MeetingCenters;
-           
+        public MainWindow()
+        {          
+            InitializeComponent();            
+            load.LoadData();
+           mCentersList.ItemsSource = Data.MeetingCenters;
+                      
         }
 
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
@@ -57,9 +60,13 @@ namespace CSP_SemestralWork
                 filedialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
                 bool? result = filedialog.ShowDialog();
                 if (result.HasValue && result.Value == true)
-                {
-                    string path = filedialog.FileName;                  
+                {                
+                    Data.MeetingCenters.Clear();
+                    Data.MeetingRooms.Clear();
+                
+                string path = filedialog.FileName;                  
                     Data.ImportData(path);
+                DataChanged = true;
                 }
             
         }
@@ -71,8 +78,11 @@ namespace CSP_SemestralWork
                 string Message = @"Do you want really delete: "+(mRoomsList.SelectedItem as MeetingRoom).Name;
                 if (MessageBox.Show(Message, "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    MeetingCenter room = (mCentersList.SelectedItem as MeetingCenter);
-                    room.MeetingRooms.Remove(mRoomsList.SelectedItem as MeetingRoom);
+                    MeetingCenter center = (mCentersList.SelectedItem as MeetingCenter);
+                    MeetingRoom room = mRoomsList.SelectedItem as MeetingRoom;
+                    center.MeetingRooms.Remove(mRoomsList.SelectedItem as MeetingRoom);
+                    Data.MeetingRooms[center.Code].Remove(room);
+                    DataChanged = true;
                 }
             }
         }
@@ -83,8 +93,12 @@ namespace CSP_SemestralWork
             {
                 if (MessageBox.Show("Do you want really delete?{0}", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-
+                    string code = (mCentersList.SelectedItem as MeetingCenter).Code;
                     Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
+                    
+                    Data.MeetingRooms.Remove(code);
+                 
+                    DataChanged = true;
                 }
             }
         }
@@ -92,20 +106,35 @@ namespace CSP_SemestralWork
 
         private void app_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-             MessageBoxResult dialog = MessageBox.Show("Do you wanna exit and save changes?", "Save changes", MessageBoxButton.YesNoCancel);
-            if (dialog == MessageBoxResult.Yes)
+            if (DataChanged == true)
             {
-                MessageBox.Show("ulozeno");   
-            }
-            else if (dialog == MessageBoxResult.No)
-            {             
+                MessageBoxResult dialog = MessageBox.Show("Do you wanna exit and save changes?", "Save changes", MessageBoxButton.YesNoCancel);
+                if (dialog == MessageBoxResult.Yes)
+                {
+                    load.SaveData();
+                }
+                else if (dialog == MessageBoxResult.No)
+                {
 
-            }
-            else if (dialog == MessageBoxResult.Cancel)
-            {
-                e.Cancel = true;
+                }
+                else if (dialog == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
 
+                }
             }
+        }
+            //Close application after presing a button exit in the File menu 
+        private void btMenuExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btMenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            load.SaveData();
+            //Data already saved in file so DataChanged = false
+            DataChanged = false;
         }
     }
 }
