@@ -9,7 +9,7 @@
     <Grid>
         <Menu Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
             <MenuItem Header="File">
-                <MenuItem Header="Import"></MenuItem>
+                <MenuItem x:Name="btImport" Header="Import" Click="btImport_Click"></MenuItem>
                 <MenuItem Header="Save"></MenuItem>
                 <MenuItem Header="Exit"></MenuItem>
             </MenuItem>

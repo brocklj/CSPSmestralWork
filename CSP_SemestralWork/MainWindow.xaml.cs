@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +27,8 @@ namespace CSP_SemestralWork
         {
             InitializeComponent();
             mCentersList.ItemsSource = TestingData.MeetingCenters;
-                   
-           
+
+
         }
 
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
@@ -36,13 +38,28 @@ namespace CSP_SemestralWork
 
         private void mCentersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
 
         }
 
         private void mRoomsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void btImport_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog filedialog = new OpenFileDialog();
+            
+            filedialog.DefaultExt = "csv";
+            filedialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            bool? result = filedialog.ShowDialog();
+            if (result.HasValue && result.Value == true)
+            {
+                string path = filedialog.FileName;
+                StreamReader sr = new StreamReader(path);
+                TestingData.LoadData(sr);
+            }
         }
     }
 }
