@@ -26,7 +26,9 @@ namespace CSP_SemestralWork
         public MainWindow()
         {
             InitializeComponent();
-            mCentersList.ItemsSource = TestingData.MeetingCenters;
+           Data.ImportData("ImportData.csv");
+            mCentersList.ItemsSource = Data.MeetingCenters;
+           
 
 
         }
@@ -46,20 +48,26 @@ namespace CSP_SemestralWork
         {
 
         }
-
+        //Action after clicking button btImport open file dialog
         private void btImport_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog filedialog = new OpenFileDialog();
-            
-            filedialog.DefaultExt = "csv";
-            filedialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
-            bool? result = filedialog.ShowDialog();
-            if (result.HasValue && result.Value == true)
+            try
             {
-                string path = filedialog.FileName;
-                StreamReader sr = new StreamReader(path);
-                TestingData.LoadData(sr);
+                OpenFileDialog filedialog = new OpenFileDialog();
+
+                filedialog.DefaultExt = "csv";
+                filedialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+                bool? result = filedialog.ShowDialog();
+                if (result.HasValue && result.Value == true)
+                {
+                    string path = filedialog.FileName;                  
+                    Data.ImportData(path);
+                }
             }
-        }
+            catch
+            {
+                
+            }
+        } 
     }
 }

@@ -15,22 +15,24 @@ namespace CSP_SemestralWork
         public int Capacity { get; set; }
         public bool VideoConference { get; set; }
         public MeetingCenter Center = new MeetingCenter();
-        public MeetingRoom(string name, string code, int capacity)
+        public MeetingRoom(string name, string code, string description, int capacity)
         {
             Name = name;
             Code = code;
             Capacity = capacity;
-
+            Description = description;
         }
 
-        public MeetingRoom(string name, string code, int capacity, MeetingCenter meetingcenter)
+        public MeetingRoom(string name, string code, string description, int capacity,string video, MeetingCenter meetingcenter)
         {
             Name = name;
             Code = code;
             Center = meetingcenter;
             Capacity = capacity;
+            //Meeting room is added into Meetingcenter instance, where belongs to
             Center.MeetingRooms.Add(this);
-            Description = "popisek";
+            Description = description;
+            VideoConference = video!="NO" ? true : false;
 
 
         }

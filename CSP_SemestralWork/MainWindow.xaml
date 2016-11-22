@@ -50,7 +50,7 @@
                 <TextBox Name="tboxMRDesc"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
                 <Label Content="Capacity"/>
                 <TextBox Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
-                <CheckBox Margin="5" Name="MRVideoConferenceCheckBox" Content="Video conference" />
+                <CheckBox Margin="5" Name="MRVideoConferenceCheckBox" Content="Video conference"  />
             </StackPanel>
 
         </StackPanel>
