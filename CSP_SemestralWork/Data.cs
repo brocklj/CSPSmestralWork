@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Collections;
+using System.Windows;
 
 namespace CSP_SemestralWork
 {
@@ -25,14 +26,22 @@ namespace CSP_SemestralWork
        public static void ImportData(string path)
         {
             StreamReader streamer = new StreamReader(path);
+            try { 
+                
             
-            // Helping Dictionary collection, which helps assign centers to rooms through code of each center
-            // that is used like a key to item of dictionary type of MeetingCenter.
-            Dictionary<string, MeetingCenter> centers = new Dictionary<string, MeetingCenter>();
-            //Clear all collections from all data to start import
-            MeetingCenters.Clear();
-            MeetingRooms.Clear();
-            StreamReader data = streamer;
+                // Helping Dictionary collection, which helps assign centers to rooms through code of each center
+                // that is used like a key to item of dictionary type of MeetingCenter.
+                Dictionary<string, MeetingCenter> centers = new Dictionary<string, MeetingCenter>();
+                //Clear all collections from all data to start import, after import application will ask whether user likes to connect with old data
+                // or import and keep only new data.
+                if(MessageBox.Show("Do you wanna keep old data in aplication?", "Data", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                {
+                    MeetingCenters.Clear();
+                    MeetingRooms.Clear();
+                }
+                
+                StreamReader data = streamer;
+       
             // helping variable used for switching between type of data of the line in CSV file
             int mode = 0;
             while (!data.EndOfStream)
@@ -66,11 +75,18 @@ namespace CSP_SemestralWork
                 {
                     //
                     MeetingRooms.Add(new MeetingRoom(values[0], values[1], values[2], Int32.Parse(values[3]), values[4], centers[values[5]]));
-                }
-
-
+                }                
             }
-             
+            
+            }
+            catch
+            {
+                MessageBox.Show("Importing data error");
+            }
+            finally
+            {
+                streamer.Close();
+            }
         }
     }
 }

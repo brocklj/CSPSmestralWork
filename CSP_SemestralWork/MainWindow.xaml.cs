@@ -26,16 +26,15 @@ namespace CSP_SemestralWork
         public MainWindow()
         {
             InitializeComponent();
-           Data.ImportData("ImportData.csv");
-            mCentersList.ItemsSource = Data.MeetingCenters;
            
 
-
+            mCentersList.ItemsSource = Data.MeetingCenters;
+           
         }
 
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
         {
-
+         
         }
 
         private void mCentersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,8 +50,7 @@ namespace CSP_SemestralWork
         //Action after clicking button btImport open file dialog
         private void btImport_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+                   
                 OpenFileDialog filedialog = new OpenFileDialog();
 
                 filedialog.DefaultExt = "csv";
@@ -63,11 +61,51 @@ namespace CSP_SemestralWork
                     string path = filedialog.FileName;                  
                     Data.ImportData(path);
                 }
-            }
-            catch
+            
+        }
+
+        private void BtDeleteMeetingRoom_Click(object sender, RoutedEventArgs e)
+        {
+            if(mRoomsList.SelectedItem != null)
             {
-                
+                string Message = @"Do you want really delete: "+(mRoomsList.SelectedItem as MeetingRoom).Name;
+                if (MessageBox.Show(Message, "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    MeetingCenter room = (mCentersList.SelectedItem as MeetingCenter);
+                    room.MeetingRooms.Remove(mRoomsList.SelectedItem as MeetingRoom);
+                }
             }
-        } 
+        }
+
+        private void BtDeleteMeetingCenter_Click(object sender, RoutedEventArgs e)
+        {
+            if (mCentersList.SelectedItem != null)
+            {
+                if (MessageBox.Show("Do you want really delete?{0}", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+
+                    Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
+                }
+            }
+        }
+
+
+        private void app_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+             MessageBoxResult dialog = MessageBox.Show("Do you wanna exit and save changes?", "Save changes", MessageBoxButton.YesNoCancel);
+            if (dialog == MessageBoxResult.Yes)
+            {
+                MessageBox.Show("ulozeno");   
+            }
+            else if (dialog == MessageBoxResult.No)
+            {             
+
+            }
+            else if (dialog == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+
+            }
+        }
     }
 }

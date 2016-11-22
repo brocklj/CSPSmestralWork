@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSP_SemestralWork"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="625">
+        Title="MainWindow" Height="550" Width="625" x:Name="app" Closing="app_Closing">
     <Grid>
         <Menu Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
             <MenuItem Header="File">
@@ -20,7 +20,7 @@
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingCenter" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
                 <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left"></Button>
-                <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingCenter" HorizontalAlignment="Right"></Button>
+                <Button Margin="5" Width="50" Content="Delete" x:Name="BtDeleteMeetingCenter" HorizontalAlignment="Right" Click="BtDeleteMeetingCenter_Click"></Button>
             </StackPanel>
             <StackPanel>
                 <Label Content="Meeting Center Details"></Label>
@@ -34,11 +34,11 @@
         </StackPanel>
         <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
             <Label Content="Meeting rooms" FontSize="20"></Label>
-            <ListBox Height="158" Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name"></ListBox>
+            <ListBox Height="158" x:Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name"></ListBox>
             <StackPanel Margin="10" Orientation="Horizontal">
-                <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingRoom" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
+                <Button Margin="5" Width="50" Content="New" x:Name="BtNewMeetingRoom" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
                 <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left"></Button>
-                <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingRoom" HorizontalAlignment="Right"></Button>
+                <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingRoom" HorizontalAlignment="Right" Click="BtDeleteMeetingRoom_Click"></Button>
             </StackPanel>
             <StackPanel>
                 <Label Content="Meeting Room Details"></Label>
