@@ -14,7 +14,6 @@ namespace CSP_SemestralWork
     class Data
     {
         public static ObservableCollection<MeetingCenter> MeetingCenters { get; set; } = new ObservableCollection<MeetingCenter>();
-        public static Dictionary<string, List<MeetingRoom>> MeetingRooms { get; set; } = new Dictionary<string, List<MeetingRoom>>();
         string FileBackup = "Data.csv";
       
   
@@ -28,6 +27,8 @@ namespace CSP_SemestralWork
         {
             StreamReader streamer = null;
             try {
+                Dictionary<string, List<MeetingRoom>> MeetingRooms = GetMeetingRooms();
+                
                 streamer = new StreamReader(path);
 
                 // Helping Dictionary collection, which helps assign centers to rooms through code of each center
@@ -111,10 +112,12 @@ namespace CSP_SemestralWork
         // Creates csv backup file
        public void SaveData()
         {
+
             StreamWriter fs = null;
             try
             {
-               
+                Dictionary<string, List<MeetingRoom>> MeetingRooms = GetMeetingRooms();
+
                 fs = new StreamWriter(FileBackup);
                 fs.WriteLine("MEETING_CENTRES,,,");
             foreach(MeetingCenter center in MeetingCenters)
@@ -144,6 +147,37 @@ namespace CSP_SemestralWork
                     fs.Close();
                 }
             }
+        }
+        public static Dictionary<string, List<MeetingRoom>> GetMeetingRooms()
+        {
+            Dictionary<string, List<MeetingRoom>> Rooms = new Dictionary<string, List<MeetingRoom>>();
+            foreach(MeetingCenter Center in Data.MeetingCenters)
+            {
+                Rooms.Add(Center.Code, new List<MeetingRoom>());
+              
+                foreach(MeetingRoom Room in Center.MeetingRooms)
+                {
+                    Rooms[Center.Code].Add(Room);             
+                }                
+            }
+
+            return Rooms;
+
+        }
+        public static MeetingCenter GetMeetingCenterByCode(string code)
+        {
+            MeetingCenter Center = new MeetingCenter();
+
+            foreach (MeetingCenter c in Data.MeetingCenters)
+            {
+                if(c.Code == code)
+                {
+                    Center = c;
+                }
+            }
+
+            return Center;
+
         }
     }
 }
