@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CSP_SemestralWork
 {
-    class MeetingCenter
+   public class MeetingCenter
     {   //string length of 2..100 characters
         public string Name { get; set; }
         // string length of 5..50 chatacters can cantain capital letters, small letters and chars: [.,:,_]

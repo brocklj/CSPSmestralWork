@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSP_SemestralWork"
         mc:Ignorable="d"
-        Title="CSP Jakub Brockl 2016" Height="550" Width="625" x:Name="app" Closing="app_Closing">
-    <Grid>
+        Title="CSP Jakub Brockl 2016" Height="550" Width="625" x:Name="app" Closing="app_Closing" Activated="app_Activated">
+    <Grid x:Name="grid">
         <Menu Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
             <MenuItem Header="File">
                 <MenuItem x:Name="btImport" Header="Import" Click="btImport_Click"></MenuItem>
@@ -19,7 +19,7 @@
             <ListBox Height="158" Name="mCentersList" DisplayMemberPath="Name"></ListBox>
             <StackPanel Margin="10" Orientation="Horizontal">
                 <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingCenter" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
-                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left"></Button>
+                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left" Click="BtEditMeetingCenter_Click"></Button>
                 <Button Margin="5" Width="50" Content="Delete" x:Name="BtDeleteMeetingCenter" HorizontalAlignment="Right" Click="BtDeleteMeetingCenter_Click"></Button>
             </StackPanel>
             <StackPanel>
@@ -34,10 +34,10 @@
         </StackPanel>
         <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
             <Label Content="Meeting rooms" FontSize="20"></Label>
-            <ListBox Height="158" x:Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name"></ListBox>
+            <ListBox Height="158" x:Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name" SourceUpdated="mRoomsList_SourceUpdated"></ListBox>
             <StackPanel Margin="10" Orientation="Horizontal">
-                <Button Margin="5" Width="50" Content="New" x:Name="BtNewMeetingRoom" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
-                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left"></Button>
+                <Button Margin="5" Width="50" Content="New" x:Name="BtNewMeetingRoom" Click="BtNewMeetingRoom_Click" HorizontalAlignment="Left"/>
+                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left" Click="BtEditMeetingRoom_Click"></Button>
                 <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingRoom" HorizontalAlignment="Right" Click="BtDeleteMeetingRoom_Click"></Button>
             </StackPanel>
             <StackPanel>
@@ -50,7 +50,7 @@
                 <TextBox Name="tboxMRDesc"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
                 <Label Content="Capacity"/>
                 <TextBox Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
-                <CheckBox Margin="5" Name="MRVideoConferenceCheckBox" Content="Video conference"  />
+                <CheckBox Margin="5" x:Name="MRVideoConferenceCheckBox" Content="Video conference" IsEnabled="False" IsChecked="{Binding ElementName=mRoomsList, Path=SelectedValue.VideoConference, Mode=OneWay}"  />
             </StackPanel>
 
         </StackPanel>

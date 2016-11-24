@@ -1,0 +1,28 @@
+﻿<Window x:Class="CSP_SemestralWork.Edit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSP_SemestralWork"
+        mc:Ignorable="d"
+        Title="Edit" Height="300" Width="300">
+    <Grid>
+        <StackPanel Width="250">
+            <Label Content="Meeting Center Details"></Label>
+            <Label Content="Name"/>
+            <TextBox x:Name="tboxName" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
+            <Label Content="Code"/>
+            <TextBox x:Name="tboxCode" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
+            <Label Content="Description"/>
+            <TextBox x:Name="tboxDesc" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
+            <StackPanel Margin="0 5 5 5" Orientation="Horizontal" x:Name="EditBtns" Visibility="Collapsed">
+                <Button Margin="0 5 5 5" Width="50" Content="Save" Name="btSave" HorizontalAlignment="Left" Click="btSave_Click"></Button>
+                <Button Margin="5" Width="50" Content="Cancel" x:Name="Cancel" HorizontalAlignment="Right" Click="Cancel_Click"></Button>
+            </StackPanel>
+            <StackPanel Margin="0 5 5 5" Orientation="Horizontal" x:Name="NewBtns" Visibility="Collapsed">
+                <Button Margin="0 5 5 5" Width="90" Content="Create New" Name="btCreate" HorizontalAlignment="Left" Click="btCreate_Click"></Button>
+                <Button Margin="5" Width="50" Content="Cancel" x:Name="Cancel2" HorizontalAlignment="Right" Click="Cancel_Click"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

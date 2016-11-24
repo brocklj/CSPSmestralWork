@@ -24,7 +24,7 @@ namespace CSP_SemestralWork
     public partial class MainWindow : Window
     {
         //Register and indicator whether data was changed every action changes DataChanged into true
-        static bool DataChanged = false;
+        public static bool DataChanged = false;
         Data load = new Data();
 
         public MainWindow()
@@ -32,24 +32,9 @@ namespace CSP_SemestralWork
             InitializeComponent();            
             load.LoadData();
            mCentersList.ItemsSource = Data.MeetingCenters;
-                      
         }
 
-        private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
-        {
-         
-        }
-
-        private void mCentersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-
-        }
-
-        private void mRoomsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+    
         //Action after clicking button btImport open file dialog
         private void btImport_Click(object sender, RoutedEventArgs e)
         {
@@ -91,7 +76,7 @@ namespace CSP_SemestralWork
         {
             if (mCentersList.SelectedItem != null)
             {
-                if (MessageBox.Show("Do you want really delete?{0}", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(("Do you want really delete? "+(mCentersList.SelectedItem as MeetingCenter).Name), "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     string code = (mCentersList.SelectedItem as MeetingCenter).Code;
                     Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
@@ -136,5 +121,68 @@ namespace CSP_SemestralWork
             //Data already saved in file so DataChanged = false
             DataChanged = false;
         }
+
+
+        //NEW EDIT DELETE - Meeting Center click buttons actions
+        private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
+        {           
+                Edit edit = new Edit();
+                 edit.NewMeetingCentre();
+                edit.ShowDialog();           
+        }
+
+        private void BtEditMeetingCenter_Click(object sender, RoutedEventArgs e)
+        {
+            if (mCentersList.SelectedItem != null)
+            {
+                Edit edit = new Edit(mCentersList.SelectedItem as MeetingCenter);
+
+                edit.ShowDialog();
+            }
+        }
+        //When window is activate, refresh data in Lists in case of changes.
+        private void app_Activated(object sender, EventArgs e)
+        {
+            mCentersList.Items.Refresh();
+            mRoomsList.Items.Refresh();
+
+            if(mCentersList.SelectedItem != null)
+            {
+                tboxNameMC.Text = (mCentersList.SelectedItem as MeetingCenter).Name;
+                tboxCodeMC.Text = (mCentersList.SelectedItem as MeetingCenter).Code;
+                tboxDescMC.Text = (mCentersList.SelectedItem as MeetingCenter).Description;
+            }
+            else if(mRoomsList.SelectedItem != null)
+            {
+                MRVideoConferenceCheckBox.IsChecked = (mRoomsList.SelectedItem as MeetingRoom).VideoConference;
+            }
+            
+        }
+
+        // NEW EDIT DELETE - Meeting Rooms click buttons actions
+        private void BtNewMeetingRoom_Click(object sender, RoutedEventArgs e)
+        {
+            Edit edit = new Edit();
+            edit.NewMeetingRoom(mCentersList.SelectedItem as MeetingCenter);
+            edit.ShowDialog();
+        }
+        private void BtEditMeetingRoom_Click(object sender, RoutedEventArgs e)
+        {
+            if (mRoomsList.SelectedItem != null)
+            {
+                Edit edit = new Edit(mRoomsList.SelectedItem as MeetingRoom);
+                edit.ShowDialog();
+            }
+        }
+
+        private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+            if (mRoomsList.SelectedItem != null)
+            {
+                MRVideoConferenceCheckBox.IsChecked = (mRoomsList.SelectedItem as MeetingRoom).VideoConference;
+            }
+        }
+
+     
     }
 }
