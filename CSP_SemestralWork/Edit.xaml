@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSP_SemestralWork"
         mc:Ignorable="d"
-        Title="Edit" Height="300" Width="300">
+        Title="Edit" Height="400" Width="300">
     <Grid>
         <StackPanel Width="250">
             <Label Content="Meeting Center Details"></Label>
@@ -15,6 +15,14 @@
             <TextBox x:Name="tboxCode" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
             <Label Content="Description"/>
             <TextBox x:Name="tboxDesc" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
+            <StackPanel x:Name="RoomTextBox" Visibility="Collapsed">
+                <Label Content="Meeting Centre"/>
+                
+                <ComboBox x:Name="CBoxEditCentre" DisplayMemberPath="Code"></ComboBox>
+                <Label Content="Capacity"/>
+                <TextBox Name="tboxCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
+                <CheckBox Margin="5" x:Name="MRVideoConferenceCheckBox" Content="Video conference" IsChecked="{Binding ElementName=mRoomsList, Path=SelectedValue.VideoConference, Mode=OneWay}"  />
+            </StackPanel>
             <StackPanel Margin="0 5 5 5" Orientation="Horizontal" x:Name="EditBtns" Visibility="Collapsed">
                 <Button Margin="0 5 5 5" Width="50" Content="Save" Name="btSave" HorizontalAlignment="Left" Click="btSave_Click"></Button>
                 <Button Margin="5" Width="50" Content="Cancel" x:Name="Cancel" HorizontalAlignment="Right" Click="Cancel_Click"></Button>

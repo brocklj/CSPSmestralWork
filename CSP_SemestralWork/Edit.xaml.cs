@@ -20,7 +20,7 @@ namespace CSP_SemestralWork
     public partial class Edit : Window
     {   //varibale type of meeting center expecting an object
         private MeetingCenter center = null;
-        private MeetingRoom room = null;
+        private MeetingRoom EditRoom = null;
         private MeetingCenter newcenter = null;
         private MeetingCenter newroomcenter = null;
         public Edit()
@@ -40,28 +40,32 @@ namespace CSP_SemestralWork
             tboxCode.Text = center.Code;
             tboxDesc.Text = center.Description;
             //Extra dunction load elements in windows specific to Meeting center
-            EditMeetingcenter();
+          
             
 
         }
         public Edit(MeetingRoom obj)
         {
             InitializeComponent();
-            room = obj;
+            EditRoom = obj;
             InitializeComponent();
             EditBtns.Visibility = Visibility.Visible;
-            tboxName.Text = room.Name;
-            tboxCode.Text = room.Code;
-            tboxDesc.Text = room.Description;
-            //Extra dunction load elements in windows specific to Meeting center
-            EditMeetingcenter();
+            tboxName.Text = EditRoom.Name;
+            tboxCode.Text = EditRoom.Code;
+            tboxDesc.Text = EditRoom.Description;
+            //Extra function load elements in windows specific to Meeting center
+            EditMeetingRoom();
 
 
         }
-        private void EditMeetingcenter()
+        //Editional method varible room is included obect type MeetingRoom
+        private void EditMeetingRoom()
         {
-          
-            
+            RoomTextBox.Visibility = Visibility.Visible;
+            tboxCapacity.Text = EditRoom.Capacity.ToString();
+            MRVideoConferenceCheckBox.IsChecked = EditRoom.VideoConference;
+            CBoxEditCentre.ItemsSource = Data.MeetingCenters;
+
         }
 
         //Method creates a new MeetingCenter
@@ -74,8 +78,10 @@ namespace CSP_SemestralWork
         //Method prepares environmet for a new MeetingCenter
         public void NewMeetingRoom(MeetingCenter obj)
         {
-            NewBtns.Visibility = Visibility.Visible;
             newroomcenter = obj;
+            NewBtns.Visibility = Visibility.Visible;
+            
+            
 
         }
 
@@ -88,11 +94,14 @@ namespace CSP_SemestralWork
                 center.Code = tboxCode.Text;
                 center.Description = tboxDesc.Text;
             }
-            else if(room != null)
+            //EditRoom Saving data
+            else if(EditRoom != null)
             {
-                room.Name = tboxName.Text;
-                room.Code = tboxCode.Text;
-                room.Description = tboxDesc.Text;
+                EditRoom.Name = tboxName.Text;
+                EditRoom.Code = tboxCode.Text;
+                EditRoom.Description = tboxDesc.Text;
+                EditRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
+                EditRoom.MoveToMeetingCenter(CBoxEditCentre.Text);
             }
             else if(newcenter != null)
             {
