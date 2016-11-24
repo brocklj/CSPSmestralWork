@@ -58,14 +58,17 @@ namespace CSP_SemestralWork
 
 
         }
-        //Editional method varible room is included obect type MeetingRoom
+        //Edit method - if varible room is included object type MeetingRoom thgroughout constcructor
         private void EditMeetingRoom()
         {
             RoomTextBox.Visibility = Visibility.Visible;
             tboxCapacity.Text = EditRoom.Capacity.ToString();
             MRVideoConferenceCheckBox.IsChecked = EditRoom.VideoConference;
+            //Method part prepared for editing function change of Meeting cetentre in a room
             CBoxEditCentre.ItemsSource = Data.MeetingCenters;
-
+            //Varible EditRoom is passed through constructor by selescting meeting room nad pressing edit button in the main window
+            CBoxEditCentre.IsEnabled = true;
+            CBoxEditCentre.Text = EditRoom.Centre.Code;
         }
 
         //Method creates a new MeetingCenter
@@ -79,9 +82,15 @@ namespace CSP_SemestralWork
         public void NewMeetingRoom(MeetingCenter obj)
         {
             newroomcenter = obj;
+            RoomTextBox.Visibility = Visibility.Visible;
             NewBtns.Visibility = Visibility.Visible;
-            
-            
+            //Code of meeting centre in room detail
+            CBoxEditCentre.IsEnabled = false;
+            CBoxEditCentre.ItemsSource = Data.MeetingCenters;
+            CBoxEditCentre.Text = newroomcenter.Code;
+
+
+
 
         }
 
@@ -101,25 +110,31 @@ namespace CSP_SemestralWork
                 EditRoom.Code = tboxCode.Text;
                 EditRoom.Description = tboxDesc.Text;
                 EditRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
-                EditRoom.MoveToMeetingCenter(CBoxEditCentre.SelectedItem as MeetingCenter);
+                EditRoom.MoveToMeetingCenter((CBoxEditCentre.SelectedItem as MeetingCenter).Code);
             }
+            // Saving new centre
             else if(newcenter != null)
             {
                 newcenter.Name = tboxName.Text;
                 newcenter.Code = tboxCode.Text;
                 newcenter.Description = tboxDesc.Text;
-                Data.MeetingRooms.Add(newcenter.Code, new List<MeetingRoom>());
+               
                 Data.MeetingCenters.Add(newcenter);
               
             }
+            // SAving new Room in meeting centre
             else if (newroomcenter != null)
             {
                 MeetingRoom NewRoom = new MeetingRoom();
                 NewRoom.Name = tboxName.Text;
                 NewRoom.Code = tboxCode.Text;
                 NewRoom.Description = tboxDesc.Text;
-                Data.MeetingRooms[newroomcenter.Code].Add(NewRoom);
+                NewRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
+                CBoxEditCentre.IsEnabled = false;
+                NewRoom.Capacity = int.Parse(tboxCapacity.Text);
+                NewRoom.Centre = newroomcenter;
                 newroomcenter.MeetingRooms.Add(NewRoom);
+                
               
             }
             //When data saved, let main window know to show "Savechages" on exit.

@@ -18,7 +18,7 @@
             <StackPanel x:Name="RoomTextBox" Visibility="Collapsed">
                 <Label Content="Meeting Centre"/>
                 
-                <ComboBox x:Name="CBoxEditCentre" DisplayMemberPath="Code"></ComboBox>
+                <ComboBox x:Name="CBoxEditCentre" DisplayMemberPath="Code" Text=""></ComboBox>
                 <Label Content="Capacity"/>
                 <TextBox Name="tboxCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
                 <CheckBox Margin="5" x:Name="MRVideoConferenceCheckBox" Content="Video conference" IsChecked="{Binding ElementName=mRoomsList, Path=SelectedValue.VideoConference, Mode=OneWay}"  />

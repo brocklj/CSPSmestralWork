@@ -47,7 +47,7 @@ namespace CSP_SemestralWork
                 if (result.HasValue && result.Value == true)
                 {                
                     Data.MeetingCenters.Clear();
-                    Data.MeetingRooms.Clear();
+                   
                 
                 string path = filedialog.FileName;                  
                     Data.ImportData(path);
@@ -66,7 +66,7 @@ namespace CSP_SemestralWork
                     MeetingCenter center = (mCentersList.SelectedItem as MeetingCenter);
                     MeetingRoom room = mRoomsList.SelectedItem as MeetingRoom;
                     center.MeetingRooms.Remove(mRoomsList.SelectedItem as MeetingRoom);
-                    Data.MeetingRooms[center.Code].Remove(room);
+                   
                     DataChanged = true;
                 }
             }
@@ -81,7 +81,7 @@ namespace CSP_SemestralWork
                     string code = (mCentersList.SelectedItem as MeetingCenter).Code;
                     Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
                     
-                    Data.MeetingRooms.Remove(code);
+                    
                  
                     DataChanged = true;
                 }
@@ -151,9 +151,11 @@ namespace CSP_SemestralWork
         // NEW EDIT DELETE - Meeting Rooms click buttons actions
         private void BtNewMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
-            Edit edit = new Edit();
+            if (mCentersList.SelectedItem != null) { 
+                Edit edit = new Edit();
             edit.NewMeetingRoom(mCentersList.SelectedItem as MeetingCenter);
             edit.ShowDialog();
+            }
         }
         private void BtEditMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
