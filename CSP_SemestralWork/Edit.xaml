@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Edit" Height="400" Width="300">
     <Grid>
-        <StackPanel Width="250">
+        <StackPanel Width="250" KeyUp="StackPanel_KeyUp">
             <Label Content="Meeting Center Details"></Label>
             <Label Content="Name"/>
             <TextBox x:Name="tboxName" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>

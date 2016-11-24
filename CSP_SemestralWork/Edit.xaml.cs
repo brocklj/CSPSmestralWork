@@ -19,7 +19,7 @@ namespace CSP_SemestralWork
     /// </summary>
     public partial class Edit : Window
     {   //varibale type of meeting center expecting an object
-        private MeetingCenter center = null;
+        private MeetingCenter EditCenter = null;
         private MeetingRoom EditRoom = null;
         private MeetingCenter newcenter = null;
         private MeetingCenter newroomcenter = null;
@@ -33,12 +33,12 @@ namespace CSP_SemestralWork
         // object MeetingCenter editing mode
         public Edit(MeetingCenter obj)
         {
-            center = obj;
+            EditCenter = obj;
             InitializeComponent();
             EditBtns.Visibility = Visibility.Visible;
-            tboxName.Text = center.Name;
-            tboxCode.Text = center.Code;
-            tboxDesc.Text = center.Description;
+            tboxName.Text = EditCenter.Name;
+            tboxCode.Text = EditCenter.Code;
+            tboxDesc.Text = EditCenter.Description;
             //Extra dunction load elements in windows specific to Meeting center
           
             
@@ -97,11 +97,11 @@ namespace CSP_SemestralWork
 
         private void save()
         {
-            if(center != null)
+            if(EditCenter != null)
             {
-                center.Name = tboxName.Text;
-                center.Code = tboxCode.Text;
-                center.Description = tboxDesc.Text;
+                EditCenter.Name = tboxName.Text;
+                EditCenter.Code = tboxCode.Text;
+                EditCenter.Description = tboxDesc.Text;
             }
             //EditRoom Saving data
             else if(EditRoom != null)
@@ -110,9 +110,12 @@ namespace CSP_SemestralWork
                 EditRoom.Code = tboxCode.Text;
                 EditRoom.Description = tboxDesc.Text;
                 EditRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
-                EditRoom.MoveToMeetingCenter((CBoxEditCentre.SelectedItem as MeetingCenter).Code);
+                if ((CBoxEditCentre.SelectedItem as MeetingCenter).Code != EditRoom.Centre.Code)
+                {
+                    EditRoom.MoveToMeetingCenter((CBoxEditCentre.SelectedItem as MeetingCenter).Code);
+                }
             }
-            // Saving new centre
+            // Saving New MeetingCentre
             else if(newcenter != null)
             {
                 newcenter.Name = tboxName.Text;
@@ -151,8 +154,28 @@ namespace CSP_SemestralWork
             }        
         }
         private bool validate()
-        {
-            return true;
+        {   //Validation varible which indicates, whether form about to save is valid
+            bool isvalid = true;
+            //Validation of NewCenter and EditingCenter, NewRoom and EditRoom form
+            if (newcenter != null || EditCenter != null || newroomcenter !=null || EditRoom != null)
+            {
+                if(tboxName.Text == "")
+                {
+                    isvalid = false;
+                    tboxName.Background = Brushes.Red;
+                }
+                else
+                {
+                    tboxName.Background = Brushes.White;
+                }
+                
+                //newcenter.Code;
+                //newcenter.Description;
+
+
+            }
+
+            if (isvalid == true) { return true; } else { return false; }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -169,6 +192,13 @@ namespace CSP_SemestralWork
             }
             
 
+        }
+
+   
+
+        private void StackPanel_KeyUp(object sender, KeyEventArgs e)
+        {
+            validate();
         }
     }
 }

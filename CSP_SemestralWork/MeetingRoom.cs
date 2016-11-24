@@ -45,6 +45,8 @@ namespace CSP_SemestralWork
             MeetingCenter OldCenter = Centre;
             NewCenter.MeetingRooms.Add(this);
             OldCenter.MeetingRooms.Remove(this);
+            //Assign new changed meeting center to Class variabe "Center" of type MeetingCenter
+            Centre = NewCenter;
 
 
         }
