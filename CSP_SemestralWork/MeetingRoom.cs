@@ -37,27 +37,28 @@ namespace CSP_SemestralWork
 
 
         }
-        public void MoveToMeetingCenter(string changecentrecode)
+        public void MoveToMeetingCenter(MeetingCenter changecentrecode)
         {
-            if (Data.MeetingRooms.ContainsKey(changecentrecode))
+            if (Data.MeetingRooms.ContainsKey(changecentrecode.Code))
             {
-                Data.MeetingRooms[changecentrecode].Add(this);
+                Data.MeetingRooms[changecentrecode.Code].Add(this);
                 Data.MeetingRooms[Centre.Code].Remove(this);
             }
             else
             {
-                Data.MeetingRooms.Add(changecentrecode, new List<MeetingRoom>());
-                Data.MeetingRooms[changecentrecode].Add(this);
+                Data.MeetingRooms.Add(changecentrecode.Code, new List<MeetingRoom>());
+                Data.MeetingRooms[changecentrecode.Code].Add(this);
+                Data.MeetingRooms[Centre.Code].Remove(this);
 
             }
 
             foreach(MeetingCenter c in Data.MeetingCenters)
             {
-                if(c.Code == changecentrecode)
+                if(c.Code == changecentrecode.Code)
                 {
                     c.MeetingRooms.Add(this);
                     Centre.MeetingRooms.Remove(this);
-                    break;
+                    
                 }
             }
 

@@ -101,7 +101,7 @@ namespace CSP_SemestralWork
                 EditRoom.Code = tboxCode.Text;
                 EditRoom.Description = tboxDesc.Text;
                 EditRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
-                EditRoom.MoveToMeetingCenter(CBoxEditCentre.Text);
+                EditRoom.MoveToMeetingCenter(CBoxEditCentre.SelectedItem as MeetingCenter);
             }
             else if(newcenter != null)
             {
