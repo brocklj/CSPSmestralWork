@@ -146,17 +146,6 @@ namespace CSP_SemestralWork
             mCentersList.Items.Refresh();
             mRoomsList.Items.Refresh();
 
-            if(mCentersList.SelectedItem != null)
-            {
-                tboxNameMC.Text = (mCentersList.SelectedItem as MeetingCenter).Name;
-                tboxCodeMC.Text = (mCentersList.SelectedItem as MeetingCenter).Code;
-                tboxDescMC.Text = (mCentersList.SelectedItem as MeetingCenter).Description;
-            }
-            else if(mRoomsList.SelectedItem != null)
-            {
-                MRVideoConferenceCheckBox.IsChecked = (mRoomsList.SelectedItem as MeetingRoom).VideoConference;
-            }
-            
         }
 
         // NEW EDIT DELETE - Meeting Rooms click buttons actions

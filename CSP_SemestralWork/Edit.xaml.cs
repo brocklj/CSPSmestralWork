@@ -97,8 +97,9 @@ namespace CSP_SemestralWork
             else if(newcenter != null)
             {
                 newcenter.Name = tboxName.Text;
-                newcenter.Code = tboxName.Text;
+                newcenter.Code = tboxCode.Text;
                 newcenter.Description = tboxDesc.Text;
+                Data.MeetingRooms.Add(newcenter.Code, new List<MeetingRoom>());
                 Data.MeetingCenters.Add(newcenter);
               
             }
@@ -108,6 +109,7 @@ namespace CSP_SemestralWork
                 NewRoom.Name = tboxName.Text;
                 NewRoom.Code = tboxCode.Text;
                 NewRoom.Description = tboxDesc.Text;
+                Data.MeetingRooms[newroomcenter.Code].Add(NewRoom);
                 newroomcenter.MeetingRooms.Add(NewRoom);
               
             }

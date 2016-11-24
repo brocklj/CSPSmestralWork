@@ -127,7 +127,7 @@ namespace CSP_SemestralWork
                 {
                     foreach(var room in rooms.Value)
                     {
-                        fs.WriteLine("{0},{1},{2},{3},{4},{5}", room.Name, room.Code, room.Description, room.Capacity, room.VideoConference == true ? "YES" : "NO", room.Center.Code);
+                        fs.WriteLine("{0},{1},{2},{3},{4},{5}", room.Name, room.Code, room.Description, room.Capacity, room.VideoConference == true ? "YES" : "NO", rooms.Key);
 
                     }
                 }
