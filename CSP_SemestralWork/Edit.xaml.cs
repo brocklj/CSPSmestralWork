@@ -34,6 +34,7 @@ namespace CSP_SemestralWork
         {
             EditCenter = obj;
             InitializeComponent();
+            FormWindow.Title = "Edit Meeting Centre";
             EditBtns.Visibility = Visibility.Visible;
             tboxName.Text = EditCenter.Name;
             tboxCode.IsEnabled = false;
@@ -54,9 +55,10 @@ namespace CSP_SemestralWork
             //Extra function load elements in windows specific to Meeting center
             EditMeetingRoom();
         }
-        //Edit method - if varible room is included object type MeetingRoom thgroughout constructor
+        //Edit method - if varible room is included object type MeetingRoom throughout constructor
         private void EditMeetingRoom()
         {
+            FormWindow.Title = "Edit Meeting Room";
             RoomTextBox.Visibility = Visibility.Visible;
             tboxCapacity.Text = EditRoom.Capacity.ToString();
             MRVideoConferenceCheckBox.IsChecked = EditRoom.VideoConference;
@@ -70,6 +72,7 @@ namespace CSP_SemestralWork
         //Method creates a new MeetingCenter
         public void NewMeetingCentre()
         {
+            FormWindow.Title = "Add New Meeting Centre";
             NewBtns.Visibility = Visibility.Visible;
             NewCenter = new MeetingCenter();
 
@@ -77,6 +80,7 @@ namespace CSP_SemestralWork
         //Method prepares environmet for a new MeetingCenter
         public void NewMeetingRoom(MeetingCenter obj)
         {
+            FormWindow.Title = "Add New Meeting Room";
             NewRoom_center = obj;
             RoomTextBox.Visibility = Visibility.Visible;
             NewBtns.Visibility = Visibility.Visible;
