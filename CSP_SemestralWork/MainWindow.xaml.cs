@@ -71,7 +71,7 @@ namespace CSP_SemestralWork
                 }
             }
         }
-
+        // Method wich askes fot confirmation to delete an item
         private void BtDeleteMeetingCenter_Click(object sender, RoutedEventArgs e)
         {
             if (mCentersList.SelectedItem != null)
@@ -79,16 +79,14 @@ namespace CSP_SemestralWork
                 if (MessageBox.Show(("Do you want really delete? "+(mCentersList.SelectedItem as MeetingCenter).Name), "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     string code = (mCentersList.SelectedItem as MeetingCenter).Code;
-                    Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
-                    
-                    
-                 
+                    Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);                  
+    
                     DataChanged = true;
                 }
             }
         }
 
-
+        // While closing app ask for saving changes if any - and save chnages
         private void app_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (DataChanged == true)
@@ -136,19 +134,19 @@ namespace CSP_SemestralWork
             if (mCentersList.SelectedItem != null)
             {
                 Edit edit = new Edit(mCentersList.SelectedItem as MeetingCenter);
-
                 edit.ShowDialog();
             }
         }
-        //When window is activate, refresh data in Lists in case of changes.
+        //When window is activate data are refreshed in the Lists and Boxes datails in case of changes.
         private void app_Activated(object sender, EventArgs e)
         {
             mCentersList.Items.Refresh();
             mRoomsList.Items.Refresh();
-
+            mRoomsList.SelectedItem = null;
+            
         }
 
-        // NEW EDIT DELETE - Meeting Rooms click buttons actions
+        // NEW  Meeting Room click buttons actions
         private void BtNewMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
             if (mCentersList.SelectedItem != null) { 
@@ -157,6 +155,7 @@ namespace CSP_SemestralWork
             edit.ShowDialog();
             }
         }
+        //Launch Editing dialog of meeting room by htting edit button
         private void BtEditMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
             if (mRoomsList.SelectedItem != null)
@@ -168,12 +167,7 @@ namespace CSP_SemestralWork
 
         private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
         {
-            if (mRoomsList.SelectedItem != null)
-            {
-                MRVideoConferenceCheckBox.IsChecked = (mRoomsList.SelectedItem as MeetingRoom).VideoConference;
-            }
+           
         }
-
-     
     }
 }

@@ -37,6 +37,7 @@ namespace CSP_SemestralWork
 
 
         }
+        //Method which gets object type of MeetingCentre from code (string)
         public void MoveToMeetingCenter(string changed_centre_code)
         {
             string NewCode = changed_centre_code;

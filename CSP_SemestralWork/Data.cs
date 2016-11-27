@@ -15,11 +15,8 @@ namespace CSP_SemestralWork
     {
         public static ObservableCollection<MeetingCenter> MeetingCenters { get; set; } = new ObservableCollection<MeetingCenter>();
         string FileBackup = "Data.csv";
-      
-  
         static Data()
-        {
-            
+        {       
 
         }
         //Method LoadData loads data into collection MeetingCenters nad MeetingRooms
@@ -148,6 +145,7 @@ namespace CSP_SemestralWork
                 }
             }
         }
+        //Method returns List of MeetingRooms from under hash from each meeting centre
         public static Dictionary<string, List<MeetingRoom>> GetMeetingRooms()
         {
             Dictionary<string, List<MeetingRoom>> Rooms = new Dictionary<string, List<MeetingRoom>>();
@@ -164,6 +162,7 @@ namespace CSP_SemestralWork
             return Rooms;
 
         }
+        // Method returns a Meeting Centre by its id code
         public static MeetingCenter GetMeetingCenterByCode(string code)
         {
             MeetingCenter Center = new MeetingCenter();
@@ -173,11 +172,14 @@ namespace CSP_SemestralWork
                 if(c.Code == code)
                 {
                     Center = c;
+                    break;
+                }
+                else
+                {
+                  Center = null;
                 }
             }
-
             return Center;
-
         }
     }
 }

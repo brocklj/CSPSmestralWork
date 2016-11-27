@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,13 +22,11 @@ namespace CSP_SemestralWork
     {   //varibale type of meeting center expecting an object
         private MeetingCenter EditCenter = null;
         private MeetingRoom EditRoom = null;
-        private MeetingCenter newcenter = null;
-        private MeetingCenter newroomcenter = null;
+        private MeetingCenter NewCenter = null;
+        private MeetingCenter NewRoom_center = null;
         public Edit()
         {
             InitializeComponent();         
-
-
         }
         // when class is instanciated with parameter type MeetingCenter edit window will start
         // object MeetingCenter editing mode
@@ -37,13 +36,12 @@ namespace CSP_SemestralWork
             InitializeComponent();
             EditBtns.Visibility = Visibility.Visible;
             tboxName.Text = EditCenter.Name;
+            tboxCode.IsEnabled = false;
             tboxCode.Text = EditCenter.Code;
             tboxDesc.Text = EditCenter.Description;
-            //Extra dunction load elements in windows specific to Meeting center
-          
-            
-
+            //Extra dunction load elements in windows specific to Meeting center          
         }
+        //Edit MeetingRoom
         public Edit(MeetingRoom obj)
         {
             InitializeComponent();
@@ -55,10 +53,8 @@ namespace CSP_SemestralWork
             tboxDesc.Text = EditRoom.Description;
             //Extra function load elements in windows specific to Meeting center
             EditMeetingRoom();
-
-
         }
-        //Edit method - if varible room is included object type MeetingRoom thgroughout constcructor
+        //Edit method - if varible room is included object type MeetingRoom thgroughout constructor
         private void EditMeetingRoom()
         {
             RoomTextBox.Visibility = Visibility.Visible;
@@ -75,26 +71,22 @@ namespace CSP_SemestralWork
         public void NewMeetingCentre()
         {
             NewBtns.Visibility = Visibility.Visible;
-            newcenter = new MeetingCenter();
+            NewCenter = new MeetingCenter();
 
         }
         //Method prepares environmet for a new MeetingCenter
         public void NewMeetingRoom(MeetingCenter obj)
         {
-            newroomcenter = obj;
+            NewRoom_center = obj;
             RoomTextBox.Visibility = Visibility.Visible;
             NewBtns.Visibility = Visibility.Visible;
             //Code of meeting centre in room detail
             CBoxEditCentre.IsEnabled = false;
             CBoxEditCentre.ItemsSource = Data.MeetingCenters;
-            CBoxEditCentre.Text = newroomcenter.Code;
-
-
-
-
+            CBoxEditCentre.Text = NewRoom_center.Code;
         }
 
-
+        //Method id called to save data
         private void save()
         {
             if(EditCenter != null)
@@ -102,6 +94,7 @@ namespace CSP_SemestralWork
                 EditCenter.Name = tboxName.Text;
                 EditCenter.Code = tboxCode.Text;
                 EditCenter.Description = tboxDesc.Text;
+                
             }
             //EditRoom Saving data
             else if(EditRoom != null)
@@ -109,24 +102,24 @@ namespace CSP_SemestralWork
                 EditRoom.Name = tboxName.Text;
                 EditRoom.Code = tboxCode.Text;
                 EditRoom.Description = tboxDesc.Text;
+                EditRoom.Capacity = int.Parse(tboxCapacity.Text);
                 EditRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
                 if ((CBoxEditCentre.SelectedItem as MeetingCenter).Code != EditRoom.Centre.Code)
                 {
                     EditRoom.MoveToMeetingCenter((CBoxEditCentre.SelectedItem as MeetingCenter).Code);
                 }
             }
-            // Saving New MeetingCentre
-            else if(newcenter != null)
+            //Saving New MeetingCentre
+            else if(NewCenter != null)
             {
-                newcenter.Name = tboxName.Text;
-                newcenter.Code = tboxCode.Text;
-                newcenter.Description = tboxDesc.Text;
-               
-                Data.MeetingCenters.Add(newcenter);
+                NewCenter.Name = tboxName.Text;
+                NewCenter.Code = tboxCode.Text;
+                NewCenter.Description = tboxDesc.Text;               
+                Data.MeetingCenters.Add(NewCenter);
               
             }
-            // SAving new Room in meeting centre
-            else if (newroomcenter != null)
+            // Saving new Room in meeting centre
+            else if (NewRoom_center != null)
             {
                 MeetingRoom NewRoom = new MeetingRoom();
                 NewRoom.Name = tboxName.Text;
@@ -134,49 +127,124 @@ namespace CSP_SemestralWork
                 NewRoom.Description = tboxDesc.Text;
                 NewRoom.VideoConference = MRVideoConferenceCheckBox.IsChecked.ToString() == "True" ? true : false;
                 CBoxEditCentre.IsEnabled = false;
-                NewRoom.Capacity = int.Parse(tboxCapacity.Text);
-                NewRoom.Centre = newroomcenter;
-                newroomcenter.MeetingRooms.Add(NewRoom);
-                
-              
+                try
+                {
+                    NewRoom.Capacity = int.Parse(tboxCapacity.Text);
+                }
+                catch
+                {
+                   MessageBox.Show("Error of capacity input type.");
+                }
+
+                NewRoom.Centre = NewRoom_center;
+                NewRoom_center.MeetingRooms.Add(NewRoom);
             }
             //When data saved, let main window know to show "Savechages" on exit.
-            MainWindow.DataChanged = true;          
-         
-
+            MainWindow.DataChanged = true;
         }
 
         private void btSave_Click(object sender, RoutedEventArgs e)
         {
-            if (validate()){
-                save();
-                this.Close();
-            }        
-        }
-        private bool validate()
-        {   //Validation varible which indicates, whether form about to save is valid
-            bool isvalid = true;
-            //Validation of NewCenter and EditingCenter, NewRoom and EditRoom form
-            if (newcenter != null || EditCenter != null || newroomcenter !=null || EditRoom != null)
+            try
             {
-                if(tboxName.Text == "")
+                //Validate data before saving
+                if (validate())
+                {
+                    save();
+                    this.Close();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Error");
+            }      
+        }
+
+        //This method does validation according to which type of form is used nad wich data are being saved
+        private bool validate()
+        {   //isvalid - a varible which indicates, whether the form is valid
+            bool isvalid = true;
+
+            Regex regex = null;
+            Match match = null;
+            //Validation of NewCenter and EditingCenter, NewRoom and EditRoom form - their common textboxes
+            if (NewCenter != null || EditCenter != null || NewRoom_center !=null || EditRoom != null)
+            {
+                //Name textbox validation on edit or new center
+                regex = new Regex(@"(.){2,200}");
+                match = regex.Match(tboxName.Text);
+                if (!match.Success)
                 {
                     isvalid = false;
-                    tboxName.Background = Brushes.Red;
+                    tboxName.Background = Brushes.LightPink;
                 }
                 else
                 {
                     tboxName.Background = Brushes.White;
                 }
-                
-                //newcenter.Code;
-                //newcenter.Description;
 
+                //Code textbox validation on editing or creating center
+                 regex = new Regex(@"^(?:[a-zA-Z:._]){5,50}?$");
+                 match = regex.Match(tboxCode.Text);
+                if (!match.Success)
+                {
+                    isvalid = false;
+                    tboxCode.Background = Brushes.LightPink;
+                }
+                else
+                {
+                    tboxCode.Background = Brushes.White;
+                }
+
+                //Description textbox validation on edit or new center
+                regex = new Regex(@"(.){10,300}");
+                match = regex.Match(tboxDesc.Text);
+                if (!match.Success)
+                {
+                    isvalid = false;
+                    tboxDesc.Background = Brushes.LightPink;
+                }
+                else
+                {
+                    tboxDesc.Background = Brushes.White;
+                }
+
+            }
+            //**New Meeeting Centre is being created
+           if(NewCenter != null) {
+           //This Conditions checks duplicity of fille New Centre code
+                if (Data.GetMeetingCenterByCode(tboxCode.Text) != null)
+                {
+                    isvalid = false;
+                    tboxCode.Background = Brushes.LightPink;
+                }
+            
+            }
+            //**New / Edit a Meeting Room 
+            if (NewRoom_center != null || EditRoom != null)
+            {
+             
+                //Capacity textbox validation on edit or  new center
+                regex = new Regex(@"^([1-9]|[1-9][1-9]|1[0]{1,2})$");
+                match = regex.Match(tboxCapacity.Text);
+                if (!match.Success)
+                {
+                    isvalid = false;
+                    tboxCapacity.Background = Brushes.LightPink;
+                }
+                else
+                {
+                    tboxCapacity.Background = Brushes.White;
+                }
 
             }
 
+
+
+            //****Result of validation return true or false****
             if (isvalid == true) { return true; } else { return false; }
-        }
+
+        }//end of validation function
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -189,13 +257,10 @@ namespace CSP_SemestralWork
             {
                 save();
                 this.Close();
-            }
-            
+            }           
 
         }
-
-   
-
+        // If strted typing into form detects changes and validates them
         private void StackPanel_KeyUp(object sender, KeyEventArgs e)
         {
             validate();

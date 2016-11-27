@@ -49,7 +49,7 @@
                 <Label Content="Description"/>
                 <TextBox Name="tboxMRDesc"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
                 <Label Content="Capacity"/>
-                <TextBox Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
+                <TextBox x:Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
                 <CheckBox Margin="5" x:Name="MRVideoConferenceCheckBox" Content="Video conference" IsEnabled="False" IsChecked="{Binding ElementName=mRoomsList, Path=SelectedValue.VideoConference, Mode=OneWay}"  />
             </StackPanel>
 
