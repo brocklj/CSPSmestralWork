@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSP_SemestralWork"
         mc:Ignorable="d"
-        Title="CSP Jakub Brockl 2016" Height="550" Width="625" x:Name="app" Closing="app_Closing" Activated="app_Activated">
+        Title="CSP Jakub Brockl 2016" Height="600" Width="625" x:Name="app" Closing="app_Closing" Activated="app_Activated">
     <Grid x:Name="grid">
         <Menu Height="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
             <MenuItem Header="File">
@@ -14,46 +14,64 @@
                 <MenuItem x:Name="btMenuExit" Header="Exit" Click="btMenuExit_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <StackPanel Margin="20" HorizontalAlignment="Left" Width="280" Orientation="Vertical">
-            <Label Content="Meeting centers" FontSize="20"></Label>
-            <ListBox Height="158" Name="mCentersList" DisplayMemberPath="Name"></ListBox>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingCenter" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
-                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left" Click="BtEditMeetingCenter_Click"></Button>
-                <Button Margin="5" Width="50" Content="Delete" x:Name="BtDeleteMeetingCenter" HorizontalAlignment="Right" Click="BtDeleteMeetingCenter_Click"></Button>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Meeting Center Details"></Label>
-                <Label Content="Name"/>
-                <TextBox x:Name="tboxNameMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
-                <Label Content="Code"/>
-                <TextBox x:Name="tboxCodeMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
-                <Label Content="Description"/>
-                <TextBox x:Name="tboxDescMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Margin="20" HorizontalAlignment="right" Width="280" Orientation="Vertical">
-            <Label Content="Meeting rooms" FontSize="20"></Label>
-            <ListBox Height="158" x:Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name" SourceUpdated="mRoomsList_SourceUpdated"></ListBox>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <Button Margin="5" Width="50" Content="New" x:Name="BtNewMeetingRoom" Click="BtNewMeetingRoom_Click" HorizontalAlignment="Left"/>
-                <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left" Click="BtEditMeetingRoom_Click"></Button>
-                <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingRoom" HorizontalAlignment="Right" Click="BtDeleteMeetingRoom_Click"></Button>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Meeting Room Details"></Label>
-                <Label Content="Name"/>
-                <TextBox Name="tboxMRName" Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
-                <Label Content="Code"/>
-                <TextBox Name="tboxMRCode"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
-                <Label Content="Description"/>
-                <TextBox Name="tboxMRDesc"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
-                <Label Content="Capacity"/>
-                <TextBox x:Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
-                <CheckBox Margin="5" x:Name="MRVideoConferenceCheckBox" Content="Video conference" IsEnabled="False" IsChecked="{Binding ElementName=mRoomsList, Path=SelectedValue.VideoConference, Mode=OneWay}"  />
-            </StackPanel>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="10" Height="10" Fill="DarkGray"/>
+                        <TextBlock>Tab 1</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
 
-        </StackPanel>
+                <Grid Grid.Column="2">
+            <StackPanel  Margin="10" HorizontalAlignment="Left" Width="280" Orientation="Vertical">
+                <Label Content="Meeting centers" FontSize="20"></Label>
+                <ListBox Height="158" Name="mCentersList" DisplayMemberPath="Name"></ListBox>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <Button Margin="5" Width="50" Content="New" Name="BtNewMeetingCenter" Click="BtNewMeetingCenter_Click" HorizontalAlignment="Left"/>
+                    <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingCenter" HorizontalAlignment="Left" Click="BtEditMeetingCenter_Click"></Button>
+                    <Button Margin="5" Width="50" Content="Delete" x:Name="BtDeleteMeetingCenter" HorizontalAlignment="Right" Click="BtDeleteMeetingCenter_Click"></Button>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Meeting Center Details"></Label>
+                    <Label Content="Name"/>
+                    <TextBox x:Name="tboxNameMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
+                    <Label Content="Code"/>
+                    <TextBox x:Name="tboxCodeMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
+                    <Label Content="Description"/>
+                    <TextBox x:Name="tboxDescMC" Text="{Binding ElementName=mCentersList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="10" HorizontalAlignment="right" Width="280" Orientation="Vertical">
+                <Label Content="Meeting rooms" FontSize="20"></Label>
+                <ListBox Height="158" x:Name="mRoomsList" ItemsSource="{Binding ElementName=mCentersList, Path=SelectedValue.MeetingRooms}" DisplayMemberPath="Name" SourceUpdated="mRoomsList_SourceUpdated"></ListBox>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <Button Margin="5" Width="50" Content="New" x:Name="BtNewMeetingRoom" Click="BtNewMeetingRoom_Click" HorizontalAlignment="Left"/>
+                    <Button Margin="5" Width="50" Content="Edit" Name="BtEditMeetingRoom" HorizontalAlignment="Left" Click="BtEditMeetingRoom_Click"></Button>
+                    <Button Margin="5" Width="50" Content="Delete" Name="BtDeleteMeetingRoom" HorizontalAlignment="Right" Click="BtDeleteMeetingRoom_Click"></Button>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Meeting Room Details"></Label>
+                    <Label Content="Name"/>
+                    <TextBox Name="tboxMRName" Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Name, Mode=OneWay}"></TextBox>
+                    <Label Content="Code"/>
+                    <TextBox Name="tboxMRCode"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Code, Mode=OneWay}"></TextBox>
+                    <Label Content="Description"/>
+                    <TextBox Name="tboxMRDesc"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Description, Mode=OneWay}"></TextBox>
+                    <Label Content="Capacity"/>
+                    <TextBox x:Name="tboxMRCapacity"  Text="{Binding ElementName=mRoomsList, Path=SelectedValue.Capacity, Mode=OneWay}"></TextBox>
+                    <CheckBox Margin="5" x:Name="MRVideoConferenceCheckBox" Content="Video conference" IsEnabled="False" IsChecked="{Binding ElementName=mRoomsList, Path=SelectedValue.VideoConference, Mode=OneWay}"  />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+            </TabItem>
+            <TabItem Header="Tab 2">
+                <!--Bind TextBlock.Text to the TextBox on the first
+    TabItem.-->
+                <TextBlock Text="{Binding ElementName=textBox1, Path=Text}"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
