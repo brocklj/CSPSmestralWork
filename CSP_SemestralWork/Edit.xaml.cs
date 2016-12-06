@@ -229,7 +229,7 @@ namespace CSP_SemestralWork
             {
              
                 //Capacity textbox validation on edit or  new center
-                regex = new Regex(@"^([1-9]|[1-9][1-9]|1[0]{1,2})$");
+                regex = new Regex(@"^([1-9]|[1-9][0-9]|1[0]{2})$");
                 match = regex.Match(tboxCapacity.Text);
                 if (!match.Success)
                 {
