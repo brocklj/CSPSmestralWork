@@ -30,8 +30,15 @@ namespace CSP_SemestralWork
         public MainWindow()
         {          
             InitializeComponent();            
-            load.LoadData();
-           mCentersList.ItemsSource = Data.MeetingCenters;
+            load.LoadData();        
+            //TabMeetingCentresRooms - Load data         
+            mCentersList.ItemsSource = Data.MeetingCenters;
+
+            //TabReservation - Load data
+            ComboCentre.ItemsSource = Data.MeetingCenters;
+            ComboCentre.Text = "Choose";
+
+
         }
 
     
@@ -167,6 +174,21 @@ namespace CSP_SemestralWork
 
         private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
         {
+           
+        }
+
+        private void TabReservation_Loaded(object sender, RoutedEventArgs e)
+        {
+         
+        }
+
+        private void ComboCentre_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboCentre.SelectedItem != null)
+            {
+                ComboRoom.IsEnabled = true;
+                ComboRoom.ItemsSource = (ComboCentre.SelectedItem as MeetingCenter).MeetingRooms;
+            }
            
         }
     }

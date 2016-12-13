@@ -15,7 +15,7 @@
             </MenuItem>
         </Menu>
         <TabControl>
-            <TabItem>
+            <TabItem Name="TabMeetingCentresRooms">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Ellipse Width="10" Height="10" Fill="DarkGray"/>
@@ -67,9 +67,8 @@
         </Grid>
             </TabItem>
             
-     <!-- Meeting Planning Tab Start -->
-            <TabItem Header="Meeting Planning">
-     <!--Bind TextBlock.Text to the TextBox on the first TabItem.-->
+    
+            <TabItem x:Name="TabReservation" Header="Meeting Planning" Loaded="TabReservation_Loaded">
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*" />
@@ -79,12 +78,9 @@
                     <StackPanel Margin="20 0 40 0">
                         <Label Content="Meeting Planning" Grid.Column="1" Grid.Row="1" FontSize="20" Width="200"></Label>
                         <Label Content="Meeting Centre" />
-                        <ComboBox x:Name="ComboCentre">
-                            
-                        </ComboBox>
+                        <ComboBox x:Name="ComboCentre" DisplayMemberPath="Name" Text="Choose Meeting Centre" SelectionChanged="ComboCentre_SelectionChanged"></ComboBox>
                         <Label Content="Meeting Room" />
-                        <ComboBox x:Name="ComboRoom">
-                            
+                        <ComboBox IsEnabled="False" x:Name="ComboRoom" DisplayMemberPath="Name">       
                         </ComboBox>
                         <Label Content="Date" />
                         <DatePicker x:Name="RezervationDatePicker">
@@ -97,8 +93,7 @@
                             <Button Margin="5" Width="50" Content="Edit" x:Name="MeetingEdit" HorizontalAlignment="Left" Click="BtEditMeetingRoom_Click"></Button>
                             <Button Margin="5" Width="50" Content="Delete" x:Name="MeetingDelete" HorizontalAlignment="Right" Click="BtDeleteMeetingRoom_Click"></Button>
                         </StackPanel>
-                    </StackPanel>
-                    <TextBlock Text="{Binding ElementName=textBox1, Path=Text}"/>
+                    </StackPanel>                    
                     <StackPanel Grid.Column="2" Margin="0 0 10 0">
                         <Button Content="Export" Height="20" VerticalAlignment="Top"></Button>
                     <Label Content="Meeting Detail" FontSize="20" Margin="20" />
@@ -121,9 +116,9 @@
 
                         <Label Content="Customer" />
                         <TextBox />
-
-                        <Label Content="Video conference" />
-                        <TextBox />
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Video conference" />
+                        </StackPanel>
 
                         <Label Content="Note" />
                         <TextBox Height="200" />
