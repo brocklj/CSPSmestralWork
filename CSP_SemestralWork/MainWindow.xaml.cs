@@ -36,9 +36,6 @@ namespace CSP_SemestralWork
 
             //TabReservation - Load data
             ComboCentre.ItemsSource = Data.MeetingCenters;
-            ComboCentre.Text = "Choose";
-
-
         }
 
     
@@ -165,13 +162,14 @@ namespace CSP_SemestralWork
         //Launch Editing dialog of meeting room by htting edit button
         private void BtEditMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
-            if (mRoomsList.SelectedItem != null)
+           if (mRoomsList.SelectedItem != null)
             {
                 Edit edit = new Edit(mRoomsList.SelectedItem as MeetingRoom);
                 edit.ShowDialog();
             }
         }
 
+        //Reservation Tab Features
         private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
         {
            
@@ -184,12 +182,41 @@ namespace CSP_SemestralWork
 
         private void ComboCentre_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ComboCentre.SelectedItem != null)
+            if (ComboCentre.SelectedItem != null && (ComboCentre.SelectedItem as MeetingCenter).MeetingRooms.Count() != 0)
             {
                 ComboRoom.IsEnabled = true;
                 ComboRoom.ItemsSource = (ComboCentre.SelectedItem as MeetingCenter).MeetingRooms;
             }
+            BtnNewReservation.IsEnabled = false;
            
+        }
+
+      private void RezervationDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RezervationDatePicker.SelectedDate != null && ComboRoom.SelectedItem != null)
+            {
+                BtnNewReservation.IsEnabled = true;
+                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate);
+            }
+        }
+
+        private void NewReservation_Click(object sender, RoutedEventArgs e)
+        {
+            if (RezervationDatePicker.SelectedDate != null && ComboRoom != null)
+            {
+                
+            }
+
+        }
+
+        private void BtnEditReservation_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnDeleteReservation_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

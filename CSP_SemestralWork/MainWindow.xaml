@@ -83,15 +83,15 @@
                         <ComboBox IsEnabled="False" x:Name="ComboRoom" DisplayMemberPath="Name">       
                         </ComboBox>
                         <Label Content="Date" />
-                        <DatePicker x:Name="RezervationDatePicker">
+                        <DatePicker x:Name="RezervationDatePicker" SelectedDateChanged="RezervationDatePicker_SelectedDateChanged">
                             
                         </DatePicker>
                         <Label Content="Meetings"></Label>
                         <ListBox x:Name="Reservations" Height="150"></ListBox>
                         <StackPanel Margin="10" Orientation="Horizontal">
-                            <Button Margin="5" Width="50" Content="New" x:Name="MeetingNew" Click="BtNewMeetingRoom_Click" HorizontalAlignment="Left"/>
-                            <Button Margin="5" Width="50" Content="Edit" x:Name="MeetingEdit" HorizontalAlignment="Left" Click="BtEditMeetingRoom_Click"></Button>
-                            <Button Margin="5" Width="50" Content="Delete" x:Name="MeetingDelete" HorizontalAlignment="Right" Click="BtDeleteMeetingRoom_Click"></Button>
+                            <Button Margin="5" Width="50" Content="New" x:Name="BtnNewReservation" Click="NewReservation_Click" HorizontalAlignment="Left" IsEnabled="False"/>
+                            <Button IsEnabled="False" Margin="5" Width="50" Content="Edit" x:Name="BtnEditReservation" HorizontalAlignment="Left" Click="BtnEditReservation_Click"></Button>
+                            <Button IsEnabled="False" Margin="5" Width="50" Content="Delete" x:Name="BtnDeleteReservation" HorizontalAlignment="Right" Click="BtnDeleteReservation_Click"></Button>
                         </StackPanel>
                     </StackPanel>                    
                     <StackPanel Grid.Column="2" Margin="0 0 10 0">

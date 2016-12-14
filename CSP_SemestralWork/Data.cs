@@ -181,5 +181,14 @@ namespace CSP_SemestralWork
             }
             return Center;
         }
+        public static void SaveReservations()
+        {
+
+        }
+
+        public static void LoadReservations()
+        {
+
+        }
     }
 }

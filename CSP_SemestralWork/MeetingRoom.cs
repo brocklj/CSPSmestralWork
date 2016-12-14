@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace CSP_SemestralWork
         public int Capacity { get; set; }
         public bool VideoConference { get; set; }
         public MeetingCenter Centre = new MeetingCenter();
+        public ObservableCollection<Reservation> Reservations { get; } = new ObservableCollection<Reservation>();
         public MeetingRoom() { }
         public MeetingRoom(string name, string code, string description, int capacity)
         {
@@ -51,9 +53,22 @@ namespace CSP_SemestralWork
 
 
         }
-     
+        //Method will create a new reservation and Add to a collection in specefic room
+        public void CreateReservation(DateTime from, DateTime to, int PersonCount, string customer, bool videoconference, string note)
+        {
+            Reservations.Add(new Reservation(from, to, PersonCount, customer, videoconference, note));
+        }
 
-    
-        
+     //This method will retrun collection of reservation, selected by DateTime type
+        public ObservableCollection<Reservation> GetReservationsByDate(DateTime date)
+        {
+            var Iselected = from res in Reservations
+                           where res.From.Date == date.Date
+                           select res;
+            ObservableCollection<Reservation> selected = new ObservableCollection<Reservation>(Iselected);
+            return selected;
+        }
+
+
     }
 }
