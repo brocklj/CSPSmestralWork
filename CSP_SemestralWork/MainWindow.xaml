@@ -14,7 +14,7 @@
                 <MenuItem x:Name="btMenuExit" Header="Exit" Click="btMenuExit_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl>
+        <TabControl Margin="0 25 0 0">
             <TabItem Name="TabMeetingCentresRooms">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -86,7 +86,7 @@
                             
                         </DatePicker>
                         <Label Content="Meetings"></Label>
-                        <ListBox x:Name="Reservations" Height="150" DisplayMemberPath="label"></ListBox>
+                        <ListBox x:Name="Reservations" Height="150" DisplayMemberPath="label" MouseLeftButtonUp="Reservations_MouseLeftButtonDown" SelectionChanged="Reservations_SelectionChanged" SourceUpdated="Reservations_SourceUpdated"></ListBox>
                         <StackPanel Margin="10" Orientation="Horizontal">
                             <Button Margin="5" Width="50" Content="New" x:Name="BtnNewReservation" Click="NewReservation_Click" HorizontalAlignment="Left" IsEnabled="False"/>
                             <Button IsEnabled="False" Margin="5" Width="50" Content="Edit" x:Name="BtnEditReservation" HorizontalAlignment="Left" Click="BtnEditReservation_Click"></Button>
@@ -98,29 +98,29 @@
                     <Label Content="Meeting Detail" FontSize="20" Margin="20" />
                         <Label Content="From - To" />
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="30" HorizontalAlignment="Left" />
+                            <TextBlock x:Name="DetFromH" Width="30" HorizontalAlignment="Left" />
                             <Label Content=":" HorizontalAlignment="Left" />
-                            <TextBlock Width="30" HorizontalAlignment="Left" />
+                            <TextBlock x:Name="DetFromM" Width="30" HorizontalAlignment="Left" />
 
                             <Label Content="-" HorizontalAlignment="Left" />
-                            <TextBlock Width="30" HorizontalAlignment="Left" />
+                            <TextBlock x:Name="DetToH" Width="30" HorizontalAlignment="Left" />
                             <Label Content=":" HorizontalAlignment="Left" />
-                            <TextBlock Width="30" HorizontalAlignment="Left" />
+                            <TextBlock x:Name="DetToM" Width="30" HorizontalAlignment="Left" />
 
                         </StackPanel>
                     
 
                         <Label Content="Expected persons count" />
-                        <TextBox />
+                        <TextBox x:Name="DetPresonsNo" />
 
                         <Label Content="Customer" />
-                        <TextBox />
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Video conference" />
+                        <TextBox x:Name="TxtBoxCustomer" />
+                        <StackPanel Margin="5" Orientation="Horizontal">
+                            <CheckBox x:Name="HasVideoCon" Content="Video conference" />
                         </StackPanel>
 
                         <Label Content="Note" />
-                        <TextBox Height="200" />
+                        <TextBox x:Name="DetNote" Height="200" />
 
                     </StackPanel>
                 </Grid>

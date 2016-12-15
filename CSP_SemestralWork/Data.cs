@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Collections;
 using System.Windows;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace CSP_SemestralWork
 {
@@ -15,6 +17,7 @@ namespace CSP_SemestralWork
     {
         public static ObservableCollection<MeetingCenter> MeetingCenters { get; set; } = new ObservableCollection<MeetingCenter>();
         string FileBackup = "Data.csv";
+        string resxmldata = "Reservations.xml";
         static Data()
         {       
 
@@ -99,6 +102,7 @@ namespace CSP_SemestralWork
             try
             {
                 ImportData(FileBackup);
+                SaveReservations(resxmldata);
             }
             catch
             {
@@ -181,8 +185,36 @@ namespace CSP_SemestralWork
             }
             return Center;
         }
-        public static void SaveReservations()
+
+        public void SaveReservations(string filepath)
         {
+            var roomscolletion = GetMeetingRooms().Values;
+          
+
+
+            var xml = new XElement("Reservations",
+                    roomscolletion.Select(rooms =>
+                        //Go across reservation inside each room
+                        rooms.Select(room =>
+                        new XElement("MeetingRoom",
+                            new XAttribute("MeetingRoomId", room.Code),
+                            room.Reservations.Select(reservation =>
+                                new XElement("Reservation",
+                                    new XAttribute("from", reservation.From.ToShortTimeString()),
+                                    new XAttribute("to", reservation.To.ToShortTimeString()),
+                                    new XAttribute("PersonsCount", reservation.PersonCount.ToString()),
+                                    new XAttribute("Customer", reservation.customer),
+                                    new XAttribute("PersonsCount", reservation.PersonCount.ToString()),
+                                    new XAttribute("Note", reservation.note),
+                                    new XAttribute("VideoConference", reservation.videoconference.ToString())
+                                    )
+                                ))                            
+                        )));
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+            XmlWriter rw = XmlWriter.Create(filepath, settings);
+            xml.WriteTo(rw);
 
         }
 

@@ -10,30 +10,31 @@
         <StackPanel Grid.Column="2" Margin="0 0 10 0" Width="250">
             <Label Content="From - To" />
             <StackPanel Orientation="Horizontal">
-                <TextBox Width="30" HorizontalAlignment="Left" />
+                <TextBox Width="30" HorizontalAlignment="Left" x:Name="ResHourFrom" />
                 <Label Content=":" HorizontalAlignment="Left" />
-                <TextBox Width="30" HorizontalAlignment="Left" />
+                <TextBox Width="30" HorizontalAlignment="Left" x:Name="ResMinuteFrom" />
 
                 <Label Content="-" HorizontalAlignment="Left" />
-                <TextBox Width="30" HorizontalAlignment="Left" />
+                <TextBox Width="30" HorizontalAlignment="Left" x:Name="ResHourTo" />
                 <Label Content=":" HorizontalAlignment="Left" />
-                <TextBox Width="30" HorizontalAlignment="Left" />
+                <TextBox Width="30" HorizontalAlignment="Left"  x:Name="ResMinuteTo"  />
 
             </StackPanel>
 
 
             <Label Content="Expected persons count" />
-            <TextBox />
+            <TextBox x:Name="PersonsCount" />
 
             <Label Content="Customer" />
-            <TextBox />
+            <TextBox x:Name="CustomerName" />
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="Video conference" />
+                <CheckBox x:Name="VideoConference" Content="Video conference" IsThreeState="True" />
             </StackPanel>
 
             <Label Content="Note" />
-            <TextBox Height="100" />
-            <Button x:Name="BtnSave" Content="Save" Width="40" Click="BtnSave_Click"></Button>
+            <TextBox Height="100" x:Name="ReservationNote" />
+            <Button x:Name="BtnCreateNew" Content="Create" Visibility="Hidden" Click="BtnCreateNew_Click"></Button>
+            <Button x:Name="BtnSave" Content="Save" Width="40" Click="BtnSave_Click" Visibility="Hidden"></Button>
         </StackPanel>
 
     </Grid>

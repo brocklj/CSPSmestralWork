@@ -28,9 +28,9 @@ namespace CSP_SemestralWork
         Data load = new Data();
 
         public MainWindow()
-        {          
-            InitializeComponent();            
-            load.LoadData();        
+        {
+            InitializeComponent();
+            load.LoadData();
             //TabMeetingCentresRooms - Load data         
             mCentersList.ItemsSource = Data.MeetingCenters;
 
@@ -38,39 +38,39 @@ namespace CSP_SemestralWork
             ComboCentre.ItemsSource = Data.MeetingCenters;
         }
 
-    
+
         //Action after clicking button btImport open file dialog
         private void btImport_Click(object sender, RoutedEventArgs e)
         {
-                   
-                OpenFileDialog filedialog = new OpenFileDialog();
 
-                filedialog.DefaultExt = "csv";
-                filedialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
-                bool? result = filedialog.ShowDialog();
-                if (result.HasValue && result.Value == true)
-                {                
-                    Data.MeetingCenters.Clear();
-                   
-                
-                string path = filedialog.FileName;                  
-                    Data.ImportData(path);
+            OpenFileDialog filedialog = new OpenFileDialog();
+
+            filedialog.DefaultExt = "csv";
+            filedialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            bool? result = filedialog.ShowDialog();
+            if (result.HasValue && result.Value == true)
+            {
+                Data.MeetingCenters.Clear();
+
+
+                string path = filedialog.FileName;
+                Data.ImportData(path);
                 DataChanged = true;
-                }
-            
+            }
+
         }
 
         private void BtDeleteMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
-            if(mRoomsList.SelectedItem != null)
+            if (mRoomsList.SelectedItem != null)
             {
-                string Message = @"Do you want really delete: "+(mRoomsList.SelectedItem as MeetingRoom).Name;
+                string Message = @"Do you want really delete: " + (mRoomsList.SelectedItem as MeetingRoom).Name;
                 if (MessageBox.Show(Message, "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     MeetingCenter center = (mCentersList.SelectedItem as MeetingCenter);
                     MeetingRoom room = mRoomsList.SelectedItem as MeetingRoom;
                     center.MeetingRooms.Remove(mRoomsList.SelectedItem as MeetingRoom);
-                   
+
                     DataChanged = true;
                 }
             }
@@ -80,11 +80,11 @@ namespace CSP_SemestralWork
         {
             if (mCentersList.SelectedItem != null)
             {
-                if (MessageBox.Show(("Do you want really delete? "+(mCentersList.SelectedItem as MeetingCenter).Name), "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(("Do you want really delete? " + (mCentersList.SelectedItem as MeetingCenter).Name), "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     string code = (mCentersList.SelectedItem as MeetingCenter).Code;
-                    Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);                  
-    
+                    Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
+
                     DataChanged = true;
                 }
             }
@@ -111,7 +111,7 @@ namespace CSP_SemestralWork
                 }
             }
         }
-            //Close application after presing a button exit in the File menu 
+        //Close application after presing a button exit in the File menu 
         private void btMenuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -127,10 +127,10 @@ namespace CSP_SemestralWork
 
         //NEW EDIT DELETE - Meeting Center click buttons actions
         private void BtNewMeetingCenter_Click(object sender, RoutedEventArgs e)
-        {           
-                Edit edit = new Edit();
-                 edit.NewMeetingCentre();
-                edit.ShowDialog();           
+        {
+            Edit edit = new Edit();
+            edit.NewMeetingCentre();
+            edit.ShowDialog();
         }
 
         private void BtEditMeetingCenter_Click(object sender, RoutedEventArgs e)
@@ -147,22 +147,31 @@ namespace CSP_SemestralWork
             mCentersList.Items.Refresh();
             mRoomsList.Items.Refresh();
             mRoomsList.SelectedItem = null;
-            
+            Reservations.Items.Refresh();
+            // Display and refresh new list of resevations
+            if (ComboRoom.SelectedItem != null && RezervationDatePicker.SelectedDate != null)
+            {
+                ReservationShowDetail();
+                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
+
+            }
+
+
         }
 
         // NEW  Meeting Room click buttons actions
         private void BtNewMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
-            if (mCentersList.SelectedItem != null) { 
+            if (mCentersList.SelectedItem != null) {
                 Edit edit = new Edit();
-            edit.NewMeetingRoom(mCentersList.SelectedItem as MeetingCenter);
-            edit.ShowDialog();
+                edit.NewMeetingRoom(mCentersList.SelectedItem as MeetingCenter);
+                edit.ShowDialog();
             }
         }
         //Launch Editing dialog of meeting room by htting edit button
         private void BtEditMeetingRoom_Click(object sender, RoutedEventArgs e)
         {
-           if (mRoomsList.SelectedItem != null)
+            if (mRoomsList.SelectedItem != null)
             {
                 Edit edit = new Edit(mRoomsList.SelectedItem as MeetingRoom);
                 edit.ShowDialog();
@@ -172,12 +181,12 @@ namespace CSP_SemestralWork
         //------Reservation Tab Features-------
         private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
         {
-           
+
         }
 
         private void TabReservation_Loaded(object sender, RoutedEventArgs e)
         {
-         
+
         }
 
         private void ComboCentre_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -189,10 +198,10 @@ namespace CSP_SemestralWork
                 Reservations.ItemsSource = null;
             }
             BtnNewReservation.IsEnabled = false;
-           
+
         }
 
-      private void RezervationDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void RezervationDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             if (RezervationDatePicker.SelectedDate != null && ComboRoom.SelectedItem != null)
             {
@@ -200,7 +209,8 @@ namespace CSP_SemestralWork
                 Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
             }
         }
-
+        //Resevation Buttons
+       //## New Reservation button
         private void NewReservation_Click(object sender, RoutedEventArgs e)
         {
             if (RezervationDatePicker.SelectedDate != null && ComboRoom.SelectedItem != null)
@@ -208,16 +218,26 @@ namespace CSP_SemestralWork
                 MeetingRoom room = (ComboRoom.SelectedItem as MeetingRoom);
                 DateTime date = RezervationDatePicker.SelectedDate.Value;
                 ReservationModalWindow window = new ReservationModalWindow();
-                window.CreateNewReservation(date,room);
+                window.CreateNewReservation(date, room);
+                window.ShowDialog();
+            }
+
+        }
+        //## Edit reservation Button
+        private void BtnEditReservation_Click(object sender, RoutedEventArgs e)
+        {
+            if (Reservations.SelectedItem != null)
+            {
+                MeetingRoom room = (ComboRoom.SelectedItem as MeetingRoom);
+                DateTime date = RezervationDatePicker.SelectedDate.Value;
+                ReservationModalWindow window = new ReservationModalWindow();
+                window.EditReservation(Reservations.SelectedItem as Reservation);
                 window.ShowDialog();
             }
 
         }
 
-        private void BtnEditReservation_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
         private void BtnDeleteReservation_Click(object sender, RoutedEventArgs e)
         {
@@ -230,6 +250,44 @@ namespace CSP_SemestralWork
                 BtnNewReservation.IsEnabled = true;
                 Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
             }
+        }
+        
+        private void Reservations_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Reservations.SelectedItem != null)
+            {
+                ReservationShowDetail();
+            }
+
+        }
+     
+
+        private void ReservationShowDetail() {
+           if( Reservations.SelectedItem != null ) { 
+            TxtBoxCustomer.Text = (Reservations.SelectedItem as Reservation).customer;
+            TxtBoxCustomer.Text = (Reservations.SelectedItem as Reservation).customer;
+            DetFromH.Text = (Reservations.SelectedItem as Reservation).From.Hour.ToString();
+            DetFromM.Text = (Reservations.SelectedItem as Reservation).From.Minute.ToString();
+            DetToH.Text = (Reservations.SelectedItem as Reservation).To.Hour.ToString();
+            DetToM.Text = (Reservations.SelectedItem as Reservation).To.Minute.ToString();
+            DetPresonsNo.Text = (Reservations.SelectedItem as Reservation).PersonCount.ToString();           
+            HasVideoCon.IsChecked = (Reservations.SelectedItem as Reservation).videoconference;
+            DetNote.Text = (Reservations.SelectedItem as Reservation).note;
+            }
+        }
+
+        private void Reservations_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        { 
+            if (Reservations.SelectedItem != null)
+            {
+                BtnEditReservation.IsEnabled = true;
+            }
+           
+        }
+
+        private void Reservations_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+            BtnEditReservation.IsEnabled = false;
         }
     }
 }
