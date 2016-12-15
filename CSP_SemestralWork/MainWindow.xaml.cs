@@ -70,7 +70,7 @@ namespace CSP_SemestralWork
                     MeetingCenter center = (mCentersList.SelectedItem as MeetingCenter);
                     MeetingRoom room = mRoomsList.SelectedItem as MeetingRoom;
                     center.MeetingRooms.Remove(mRoomsList.SelectedItem as MeetingRoom);
-
+                    DataReload();
                     DataChanged = true;
                 }
             }
@@ -84,7 +84,7 @@ namespace CSP_SemestralWork
                 {
                     string code = (mCentersList.SelectedItem as MeetingCenter).Code;
                     Data.MeetingCenters.Remove(mCentersList.SelectedItem as MeetingCenter);
-
+                    DataReload();
                     DataChanged = true;
                 }
             }
@@ -149,12 +149,7 @@ namespace CSP_SemestralWork
             mRoomsList.SelectedItem = null;
             Reservations.Items.Refresh();
             // Display and refresh new list of resevations
-            if (ComboRoom.SelectedItem != null && RezervationDatePicker.SelectedDate != null)
-            {
-                ReservationShowDetail();
-                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
-
-            }
+            DataReload();
 
 
         }
@@ -177,6 +172,17 @@ namespace CSP_SemestralWork
                 edit.ShowDialog();
             }
         }
+
+        private void DataReload()
+        {
+            if (ComboRoom.SelectedItem != null && RezervationDatePicker.SelectedDate != null)
+            {
+                ReservationShowDetail();
+                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
+
+            }
+        }
+    
 
         //------Reservation Tab Features-------
         private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
@@ -241,6 +247,19 @@ namespace CSP_SemestralWork
 
         private void BtnDeleteReservation_Click(object sender, RoutedEventArgs e)
         {
+            if (Reservations.SelectedItem != null)
+            {
+                string Message = @"Do you want really delete reservation?";
+                if (MessageBox.Show(Message, "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    Reservation reservation = (Reservations.SelectedItem as Reservation);
+                    MeetingRoom room = ComboRoom.SelectedItem as MeetingRoom;
+                    room.Reservations.Remove(reservation);
+                    ReservationShowDetail();
+                    DataChanged = true;
+                    DataReload();
+                }
+            }
         }
 
         private void ComboRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -281,6 +300,7 @@ namespace CSP_SemestralWork
             if (Reservations.SelectedItem != null)
             {
                 BtnEditReservation.IsEnabled = true;
+                BtnDeleteReservation.IsEnabled = true;
             }
            
         }

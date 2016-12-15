@@ -49,7 +49,7 @@ namespace CSP_SemestralWork
             From = From.Date.AddHours(int.Parse(ResHourFrom.Text)).AddMinutes(int.Parse(ResMinuteFrom.Text));
             To = To.Date.AddHours(int.Parse(ResHourTo.Text)).AddMinutes(int.Parse(ResMinuteTo.Text));
             string customername = CustomerName.Text;
-            int personsnumber = int.Parse(PersonsCount.Text);
+            int personsnumber = PersonsCount.Text == "" ? 0 : int.Parse(PersonsCount.Text);
             bool? IsVideoConference = VideoConference.IsChecked;
             string note = ReservationNote.Text;
             MeetingRoom.Reservations.Add(new Reservation(From, To, personsnumber, customername, IsVideoConference, note));
