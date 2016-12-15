@@ -33,7 +33,7 @@
 
             <Label Content="Note" />
             <TextBox Height="100" />
-            <Button x:Name="BtnSave" Content="Save" Width="40"></Button>
+            <Button x:Name="BtnSave" Content="Save" Width="40" Click="BtnSave_Click"></Button>
         </StackPanel>
 
     </Grid>

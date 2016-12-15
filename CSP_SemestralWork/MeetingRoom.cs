@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -62,13 +63,19 @@ namespace CSP_SemestralWork
      //This method will retrun collection of reservation, selected by DateTime type
         public ObservableCollection<Reservation> GetReservationsByDate(DateTime date)
         {
-            var Iselected = from res in Reservations
+           
+            IEnumerable<Reservation> Iselected = from res in Reservations
                            where res.From.Date == date.Date
                            select res;
             ObservableCollection<Reservation> selected = new ObservableCollection<Reservation>(Iselected);
             return selected;
+            
+         
         }
 
-
+        internal IEnumerable GetReservationsByDate(DateTime? selectedDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

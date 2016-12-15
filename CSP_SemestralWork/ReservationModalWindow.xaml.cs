@@ -19,9 +19,27 @@ namespace CSP_SemestralWork
     /// </summary>
     public partial class ReservationModalWindow : Window
     {
+        private MeetingRoom MeetingRoom;
+        private DateTime From;
+        private DateTime To;
+
+
         public ReservationModalWindow()
         {
             InitializeComponent();
+        }
+        public void CreateNewReservation(DateTime date, MeetingRoom room)
+        {
+            MeetingRoom = room;
+            From = date;
+            To = date.AddHours(1);
+        }
+        
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+            MeetingRoom.Reservations.Add(new Reservation(From, To, 1, "Novy", false, "nova"));
         }
     }
 }

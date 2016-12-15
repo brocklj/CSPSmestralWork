@@ -14,6 +14,9 @@ namespace CSP_SemestralWork
         public string customer { get; }
         public bool videoconference { get; }
         public string note { get; }
+        public string label { get; } 
+       
+
 
         public Reservation(DateTime attfrom, DateTime atto, int attPersonCount, string attcustomer, bool attvideoconference, string attnote)
         {
@@ -23,6 +26,12 @@ namespace CSP_SemestralWork
             customer = attcustomer;
             videoconference = attvideoconference;
             note = attnote;
+            label = FromTo();
+           
+        }
+        public string FromTo()
+        {
+            return string.Format("{0}:{1} - {2}:{3}", From.Hour.ToString(), From.Minute, To.Hour, To.Minute);
         }
     }
 }

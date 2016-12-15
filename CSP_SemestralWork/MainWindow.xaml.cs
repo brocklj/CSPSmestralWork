@@ -169,7 +169,7 @@ namespace CSP_SemestralWork
             }
         }
 
-        //Reservation Tab Features
+        //------Reservation Tab Features-------
         private void mRoomsList_SourceUpdated(object sender, DataTransferEventArgs e)
         {
            
@@ -186,6 +186,7 @@ namespace CSP_SemestralWork
             {
                 ComboRoom.IsEnabled = true;
                 ComboRoom.ItemsSource = (ComboCentre.SelectedItem as MeetingCenter).MeetingRooms;
+                Reservations.ItemsSource = null;
             }
             BtnNewReservation.IsEnabled = false;
            
@@ -196,15 +197,19 @@ namespace CSP_SemestralWork
             if (RezervationDatePicker.SelectedDate != null && ComboRoom.SelectedItem != null)
             {
                 BtnNewReservation.IsEnabled = true;
-                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate);
+                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
             }
         }
 
         private void NewReservation_Click(object sender, RoutedEventArgs e)
         {
-            if (RezervationDatePicker.SelectedDate != null && ComboRoom != null)
+            if (RezervationDatePicker.SelectedDate != null && ComboRoom.SelectedItem != null)
             {
-                
+                MeetingRoom room = (ComboRoom.SelectedItem as MeetingRoom);
+                DateTime date = RezervationDatePicker.SelectedDate.Value;
+                ReservationModalWindow window = new ReservationModalWindow();
+                window.CreateNewReservation(date,room);
+                window.ShowDialog();
             }
 
         }
@@ -216,7 +221,15 @@ namespace CSP_SemestralWork
 
         private void BtnDeleteReservation_Click(object sender, RoutedEventArgs e)
         {
+        }
 
+        private void ComboRoom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RezervationDatePicker.SelectedDate != null && ComboRoom.SelectedItem != null)
+            {
+                BtnNewReservation.IsEnabled = true;
+                Reservations.ItemsSource = (ComboRoom.SelectedItem as MeetingRoom).GetReservationsByDate(RezervationDatePicker.SelectedDate.Value);
+            }
         }
     }
 }

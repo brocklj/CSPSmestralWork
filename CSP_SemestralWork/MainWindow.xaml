@@ -80,14 +80,13 @@
                         <Label Content="Meeting Centre" />
                         <ComboBox x:Name="ComboCentre" DisplayMemberPath="Name" Text="Choose Meeting Centre" SelectionChanged="ComboCentre_SelectionChanged"></ComboBox>
                         <Label Content="Meeting Room" />
-                        <ComboBox IsEnabled="False" x:Name="ComboRoom" DisplayMemberPath="Name">       
-                        </ComboBox>
+                        <ComboBox IsEnabled="False" x:Name="ComboRoom" DisplayMemberPath="Name" SelectionChanged="ComboRoom_SelectionChanged"/>
                         <Label Content="Date" />
                         <DatePicker x:Name="RezervationDatePicker" SelectedDateChanged="RezervationDatePicker_SelectedDateChanged">
                             
                         </DatePicker>
                         <Label Content="Meetings"></Label>
-                        <ListBox x:Name="Reservations" Height="150"></ListBox>
+                        <ListBox x:Name="Reservations" Height="150" DisplayMemberPath="label"></ListBox>
                         <StackPanel Margin="10" Orientation="Horizontal">
                             <Button Margin="5" Width="50" Content="New" x:Name="BtnNewReservation" Click="NewReservation_Click" HorizontalAlignment="Left" IsEnabled="False"/>
                             <Button IsEnabled="False" Margin="5" Width="50" Content="Edit" x:Name="BtnEditReservation" HorizontalAlignment="Left" Click="BtnEditReservation_Click"></Button>
